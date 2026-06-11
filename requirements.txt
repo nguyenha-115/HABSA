@@ -1,0 +1,7 @@
+torch>=2.2
+PyYAML>=6.0
+transformers>=4.40
+scikit-learn>=1.4
+networkx>=3.2
+shap>=0.45
+owlready2>=0.46

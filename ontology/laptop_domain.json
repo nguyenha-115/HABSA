@@ -1,0 +1,661 @@
+{
+  "domain": "laptop",
+  "concepts": [
+    {
+      "name": "LaptopAspect",
+      "parent": null,
+      "labels": [
+        "laptop",
+        "computer",
+        "notebook"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 0
+    },
+    {
+      "name": "HardwareAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "hardware",
+        "build",
+        "device"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    },
+    {
+      "name": "DisplayAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "screen",
+        "display",
+        "monitor",
+        "lcd",
+        "graphics"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "BrightnessAspect",
+      "parent": "DisplayAspect",
+      "labels": [
+        "brightness",
+        "bright",
+        "dim",
+        "backlight"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "ResolutionAspect",
+      "parent": "DisplayAspect",
+      "labels": [
+        "resolution",
+        "pixels",
+        "retina"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "ColorAccuracyAspect",
+      "parent": "DisplayAspect",
+      "labels": [
+        "color",
+        "colour",
+        "contrast"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "BatteryAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "battery",
+        "power",
+        "charge",
+        "charger",
+        "battery life"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.5,
+      "is_critical": true,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "BatteryLifeAspect",
+      "parent": "BatteryAspect",
+      "labels": [
+        "battery life",
+        "runtime",
+        "battery duration"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.6,
+      "is_critical": true,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "ChargingSpeedAspect",
+      "parent": "BatteryAspect",
+      "labels": [
+        "charging speed",
+        "fast charge",
+        "recharge"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "KeyboardAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "keyboard",
+        "keys",
+        "typing"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "KeyTravelAspect",
+      "parent": "KeyboardAspect",
+      "labels": [
+        "key travel",
+        "keystroke"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "KeyLayoutAspect",
+      "parent": "KeyboardAspect",
+      "labels": [
+        "key layout",
+        "layout",
+        "numpad"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "TouchpadAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "touchpad",
+        "trackpad",
+        "mouse pad"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "TouchpadResponsivenessAspect",
+      "parent": "TouchpadAspect",
+      "labels": [
+        "touchpad responsiveness",
+        "responsive touchpad",
+        "cursor"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "TouchpadSizeAspect",
+      "parent": "TouchpadAspect",
+      "labels": [
+        "touchpad size",
+        "large touchpad"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 3
+    },
+    {
+      "name": "StorageAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "storage",
+        "hard drive",
+        "disk",
+        "ssd",
+        "drive"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "AudioAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "audio",
+        "sound",
+        "speaker",
+        "speakers"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "ConnectivityAspect",
+      "parent": "HardwareAspect",
+      "labels": [
+        "wifi",
+        "wireless",
+        "bluetooth",
+        "port",
+        "ports",
+        "usb"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "PerformanceAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "performance",
+        "speed",
+        "fast",
+        "slow",
+        "lag",
+        "runs"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.3,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    },
+    {
+      "name": "ProcessingSpeedAspect",
+      "parent": "PerformanceAspect",
+      "labels": [
+        "processor",
+        "cpu",
+        "processing speed",
+        "programs",
+        "applications"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "MemoryAspect",
+      "parent": "PerformanceAspect",
+      "labels": [
+        "memory",
+        "ram"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "SoftwareAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "software",
+        "windows",
+        "operating system",
+        "program"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    },
+    {
+      "name": "PortabilityAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "portability",
+        "portable",
+        "travel",
+        "mobility"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    },
+    {
+      "name": "WeightAspect",
+      "parent": "PortabilityAspect",
+      "labels": [
+        "weight",
+        "lightweight",
+        "heavy"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "DimensionsAspect",
+      "parent": "PortabilityAspect",
+      "labels": [
+        "size",
+        "dimensions",
+        "thin",
+        "thickness"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 2
+    },
+    {
+      "name": "DesignAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "design",
+        "look",
+        "appearance",
+        "quality",
+        "build quality"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    },
+    {
+      "name": "PriceAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "price",
+        "cost",
+        "value",
+        "expensive",
+        "cheap"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    },
+    {
+      "name": "SupportAspect",
+      "parent": "LaptopAspect",
+      "labels": [
+        "support",
+        "warranty",
+        "service",
+        "customer service"
+      ],
+      "domain": "laptop",
+      "sentiment_weight": 1.0,
+      "is_critical": false,
+      "relations": {},
+      "depth": 1
+    }
+  ],
+  "triples": [
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "HardwareAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "DisplayAspect"
+    ],
+    [
+      "DisplayAspect",
+      "hasSubAspect",
+      "BrightnessAspect"
+    ],
+    [
+      "DisplayAspect",
+      "hasSubAspect",
+      "ResolutionAspect"
+    ],
+    [
+      "DisplayAspect",
+      "hasSubAspect",
+      "ColorAccuracyAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "BatteryAspect"
+    ],
+    [
+      "BatteryAspect",
+      "hasSubAspect",
+      "BatteryLifeAspect"
+    ],
+    [
+      "BatteryAspect",
+      "hasSubAspect",
+      "ChargingSpeedAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "KeyboardAspect"
+    ],
+    [
+      "KeyboardAspect",
+      "hasSubAspect",
+      "KeyTravelAspect"
+    ],
+    [
+      "KeyboardAspect",
+      "hasSubAspect",
+      "KeyLayoutAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "TouchpadAspect"
+    ],
+    [
+      "TouchpadAspect",
+      "hasSubAspect",
+      "TouchpadResponsivenessAspect"
+    ],
+    [
+      "TouchpadAspect",
+      "hasSubAspect",
+      "TouchpadSizeAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "StorageAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "AudioAspect"
+    ],
+    [
+      "HardwareAspect",
+      "hasSubAspect",
+      "ConnectivityAspect"
+    ],
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "PerformanceAspect"
+    ],
+    [
+      "PerformanceAspect",
+      "hasSubAspect",
+      "ProcessingSpeedAspect"
+    ],
+    [
+      "PerformanceAspect",
+      "hasSubAspect",
+      "MemoryAspect"
+    ],
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "SoftwareAspect"
+    ],
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "PortabilityAspect"
+    ],
+    [
+      "PortabilityAspect",
+      "hasSubAspect",
+      "WeightAspect"
+    ],
+    [
+      "PortabilityAspect",
+      "hasSubAspect",
+      "DimensionsAspect"
+    ],
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "DesignAspect"
+    ],
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "PriceAspect"
+    ],
+    [
+      "LaptopAspect",
+      "hasSubAspect",
+      "SupportAspect"
+    ]
+  ],
+  "lexicon": {
+    "laptop": "LaptopAspect",
+    "computer": "LaptopAspect",
+    "notebook": "LaptopAspect",
+    "hardware": "HardwareAspect",
+    "build": "HardwareAspect",
+    "device": "HardwareAspect",
+    "screen": "DisplayAspect",
+    "display": "DisplayAspect",
+    "monitor": "DisplayAspect",
+    "lcd": "DisplayAspect",
+    "graphics": "DisplayAspect",
+    "brightness": "BrightnessAspect",
+    "bright": "BrightnessAspect",
+    "dim": "BrightnessAspect",
+    "backlight": "BrightnessAspect",
+    "resolution": "ResolutionAspect",
+    "pixels": "ResolutionAspect",
+    "retina": "ResolutionAspect",
+    "color": "ColorAccuracyAspect",
+    "colour": "ColorAccuracyAspect",
+    "contrast": "ColorAccuracyAspect",
+    "battery": "BatteryAspect",
+    "power": "BatteryAspect",
+    "charge": "BatteryAspect",
+    "charger": "BatteryAspect",
+    "battery life": "BatteryLifeAspect",
+    "runtime": "BatteryLifeAspect",
+    "battery duration": "BatteryLifeAspect",
+    "charging speed": "ChargingSpeedAspect",
+    "fast charge": "ChargingSpeedAspect",
+    "recharge": "ChargingSpeedAspect",
+    "keyboard": "KeyboardAspect",
+    "keys": "KeyboardAspect",
+    "typing": "KeyboardAspect",
+    "key travel": "KeyTravelAspect",
+    "keystroke": "KeyTravelAspect",
+    "key layout": "KeyLayoutAspect",
+    "layout": "KeyLayoutAspect",
+    "numpad": "KeyLayoutAspect",
+    "touchpad": "TouchpadAspect",
+    "trackpad": "TouchpadAspect",
+    "mouse pad": "TouchpadAspect",
+    "touchpad responsiveness": "TouchpadResponsivenessAspect",
+    "responsive touchpad": "TouchpadResponsivenessAspect",
+    "cursor": "TouchpadResponsivenessAspect",
+    "touchpad size": "TouchpadSizeAspect",
+    "large touchpad": "TouchpadSizeAspect",
+    "storage": "StorageAspect",
+    "hard drive": "StorageAspect",
+    "disk": "StorageAspect",
+    "ssd": "StorageAspect",
+    "drive": "StorageAspect",
+    "audio": "AudioAspect",
+    "sound": "AudioAspect",
+    "speaker": "AudioAspect",
+    "speakers": "AudioAspect",
+    "wifi": "ConnectivityAspect",
+    "wireless": "ConnectivityAspect",
+    "bluetooth": "ConnectivityAspect",
+    "port": "ConnectivityAspect",
+    "ports": "ConnectivityAspect",
+    "usb": "ConnectivityAspect",
+    "performance": "PerformanceAspect",
+    "speed": "PerformanceAspect",
+    "fast": "PerformanceAspect",
+    "slow": "PerformanceAspect",
+    "lag": "PerformanceAspect",
+    "runs": "PerformanceAspect",
+    "processor": "ProcessingSpeedAspect",
+    "cpu": "ProcessingSpeedAspect",
+    "processing speed": "ProcessingSpeedAspect",
+    "programs": "ProcessingSpeedAspect",
+    "applications": "ProcessingSpeedAspect",
+    "memory": "MemoryAspect",
+    "ram": "MemoryAspect",
+    "software": "SoftwareAspect",
+    "windows": "SoftwareAspect",
+    "operating system": "SoftwareAspect",
+    "program": "SoftwareAspect",
+    "portability": "PortabilityAspect",
+    "portable": "PortabilityAspect",
+    "travel": "PortabilityAspect",
+    "mobility": "PortabilityAspect",
+    "weight": "WeightAspect",
+    "lightweight": "WeightAspect",
+    "heavy": "WeightAspect",
+    "size": "DimensionsAspect",
+    "dimensions": "DimensionsAspect",
+    "thin": "DimensionsAspect",
+    "thickness": "DimensionsAspect",
+    "design": "DesignAspect",
+    "look": "DesignAspect",
+    "appearance": "DesignAspect",
+    "quality": "DesignAspect",
+    "build quality": "DesignAspect",
+    "price": "PriceAspect",
+    "cost": "PriceAspect",
+    "value": "PriceAspect",
+    "expensive": "PriceAspect",
+    "cheap": "PriceAspect",
+    "support": "SupportAspect",
+    "warranty": "SupportAspect",
+    "service": "SupportAspect",
+    "customer service": "SupportAspect"
+  }
+}

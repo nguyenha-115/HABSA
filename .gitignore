@@ -206,6 +206,10 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# OKE-HABSA generated artifacts
+outputs/
+*.pt
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

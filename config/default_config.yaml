@@ -1,0 +1,52 @@
+seed: 42
+device: cuda
+output_dir: outputs
+
+data:
+  root: data/raw
+  domain: Laptops
+  max_length: 96
+  min_frequency: 2
+  validation_ratio: 0.1
+  num_workers: 0
+
+ontology:
+  domain: laptop
+  path: ontology/laptop_domain.owl
+  mapping_threshold: 0.45
+  embedding_dim: 128
+  transe_margin: 1.0
+  transe_epochs: 50
+
+model:
+  text_backend: bigru
+  pretrained_model: xlm-roberta-base
+  local_files_only: true
+  vocab_size: 30000
+  embedding_dim: 192
+  hidden_dim: 256
+  ontology_dim: 128
+  num_heads: 4
+  dropout: 0.2
+  num_sentiments: 5
+
+training:
+  batch_size: 24
+  learning_rate: 0.0003
+  plm_learning_rate: 0.00002
+  weight_decay: 0.01
+  gradient_clip: 1.0
+  warmup_epochs: 5
+  main_epochs: 20
+  finetune_epochs: 5
+  patience: 5
+  alpha_main: 0.6
+  beta_sub: 0.4
+  lambda_mono: 0.1
+  lambda_dom: 0.2
+  lambda_cons: 0.1
+  lambda_kge: 0.05
+
+explainability:
+  integrated_gradients_steps: 50
+  top_k: 10
