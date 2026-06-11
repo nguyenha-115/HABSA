@@ -88,12 +88,25 @@ class OntologicalLoss(nn.Module):
         self,
         outputs: dict,
         labels: torch.Tensor,
+        node_targets: torch.Tensor | None = None,
         constraint_scale: float = 1.0,
         kge_loss: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor]:
         sub = F.cross_entropy(outputs["logits"], labels)
         main = F.cross_entropy(outputs["main_logits"], labels)
         hierarchical = self.alpha_main * main + self.beta_sub * sub
+
+        # supervise tất cả ancestor nodes
+        node_loss = hierarchical.new_zeros(())
+        if node_targets is not None:
+            B, N, C = outputs["node_logits"].shape
+            node_loss = F.cross_entropy(
+                outputs["node_logits"].view(B * N, C),
+                node_targets.view(B * N),
+                ignore_index=-100,
+            )
+            hierarchical = hierarchical + 0.3 * node_loss
+
         monotonicity = self.monotonicity_loss(outputs["node_logits"])
         dominance = self.dominance_loss(outputs["propagation_weights"])
         consistency = self.consistency_loss(outputs["node_logits"])
@@ -109,6 +122,7 @@ class OntologicalLoss(nn.Module):
         return {
             "total": total,
             "hierarchical": hierarchical,
+            "node": node_loss,
             "main": main,
             "sub": sub,
             "monotonicity": monotonicity,

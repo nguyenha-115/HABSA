@@ -40,12 +40,53 @@ class StageTrainer:
             lambda_cons=float(training.lambda_cons),
             lambda_kge=float(training.lambda_kge),
         )
-        self.optimizer = torch.optim.AdamW(
-            self.model.parameters(),
-            lr=float(training.learning_rate),
-            weight_decay=float(training.weight_decay),
-        )
+        no_decay_ids = {
+            id(parameter)
+            for module in self.model.modules()
+            if isinstance(module, torch.nn.LayerNorm)
+            for parameter in module.parameters(recurse=False)
+        }
+        grouped_parameters: dict[tuple[bool, bool], list[torch.nn.Parameter]] = {
+            (is_plm, use_decay): []
+            for is_plm in (False, True)
+            for use_decay in (False, True)
+        }
+        for name, parameter in self.model.named_parameters():
+            if not parameter.requires_grad:
+                continue
+            is_plm = "text_encoder.transformer" in name
+            use_decay = not (name.endswith(".bias") or id(parameter) in no_decay_ids)
+            grouped_parameters[(is_plm, use_decay)].append(parameter)
+
+        param_groups = []
+        for (is_plm, use_decay), parameters in grouped_parameters.items():
+            if not parameters:
+                continue
+            learning_rate = float(
+                training.plm_learning_rate if is_plm else training.learning_rate
+            )
+            param_groups.append(
+                {
+                    "params": parameters,
+                    "lr": learning_rate,
+                    "initial_lr": learning_rate,
+                    "weight_decay": (
+                        float(training.weight_decay) if use_decay else 0.0
+                    ),
+                }
+            )
+        self.optimizer = torch.optim.AdamW(param_groups)
         self.history: list[dict] = []
+
+    def _sample_negative_triples(self, triples: torch.Tensor) -> torch.Tensor:
+        negative = triples.clone()
+        replace_head = torch.rand(len(triples), device=self.device) < 0.5
+        random_entities = torch.randint(
+            0, len(self.ontology.names), (len(triples),), device=self.device
+        )
+        negative[replace_head, 0] = random_entities[replace_head]
+        negative[~replace_head, 2] = random_entities[~replace_head]
+        return negative
 
     def pretrain_transe(self, epochs: int | None = None) -> list[float]:
         epochs = int(epochs if epochs is not None else self.config.ontology.transe_epochs)
@@ -55,13 +96,7 @@ class StageTrainer:
         optimizer = torch.optim.Adam(self.model.transe.parameters(), lr=1e-3)
         losses: list[float] = []
         for _ in range(epochs):
-            negative = triples.clone()
-            replace_head = torch.rand(len(triples), device=self.device) < 0.5
-            random_entities = torch.randint(
-                0, len(self.ontology.names), (len(triples),), device=self.device
-            )
-            negative[replace_head, 0] = random_entities[replace_head]
-            negative[~replace_head, 2] = random_entities[~replace_head]
+            negative = self._sample_negative_triples(triples)
             loss = self.model.transe.margin_loss(
                 triples,
                 negative,
@@ -78,9 +113,9 @@ class StageTrainer:
         requires_grad = stage != "warmup"
         for parameter in self.model.transe.parameters():
             parameter.requires_grad = requires_grad
-        if stage == "finetune":
-            for group in self.optimizer.param_groups:
-                group["lr"] = float(self.config.training.learning_rate) * 0.1
+        learning_rate_scale = 0.1 if stage == "finetune" else 1.0
+        for group in self.optimizer.param_groups:
+            group["lr"] = float(group["initial_lr"]) * learning_rate_scale
 
     def _run_epoch(
         self,
@@ -108,13 +143,7 @@ class StageTrainer:
                 kge_loss = None
                 if training and constraint_scale > 0:
                     triples = self.model.ontology_triples(self.device)
-                    negative = triples.clone()
-                    negative[:, 2] = torch.randint(
-                        0,
-                        len(self.ontology.names),
-                        (len(triples),),
-                        device=self.device,
-                    )
+                    negative = self._sample_negative_triples(triples)
                     kge_loss = self.model.transe.margin_loss(
                         triples,
                         negative,
@@ -123,6 +152,7 @@ class StageTrainer:
                 losses = self.criterion(
                     outputs,
                     batch["label"],
+                    node_targets=batch["node_targets"],
                     constraint_scale=constraint_scale,
                     kge_loss=kge_loss,
                 )

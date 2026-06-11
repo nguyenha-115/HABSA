@@ -2,14 +2,18 @@ from __future__ import annotations
 
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import torch
+from torch import nn
 
 from config import load_config
 from data_loader import OKEHABSADataset, TextPreprocessor, VocabularyTokenizer, collate_oke_habsa
 from losses import OntologicalLoss
 from models import OKEHABSANet
+from models.embedders import TransEEmbedding
 from ontology import OntologyManager
+from trainers import StageTrainer
 
 
 SAMPLES = [
@@ -28,6 +32,19 @@ SAMPLES = [
         ],
     },
 ]
+
+
+class DummyTrainerModel(nn.Module):
+    def __init__(self, num_entities: int):
+        super().__init__()
+        self.text_encoder = nn.Module()
+        self.text_encoder.transformer = nn.Sequential(
+            nn.Linear(4, 4),
+            nn.LayerNorm(4),
+        )
+        self.classifier = nn.Linear(4, 2)
+        self.output_norm = nn.LayerNorm(2)
+        self.transe = TransEEmbedding(num_entities, 1, 4)
 
 
 class PipelineTest(unittest.TestCase):
@@ -76,6 +93,86 @@ class PipelineTest(unittest.TestCase):
         losses = criterion(outputs, batch["label"])
         self.assertTrue(torch.isfinite(losses["total"]))
         losses["total"].backward()
+
+    def test_trainer_optimizer_groups_plm_lr_and_no_decay(self):
+        model = DummyTrainerModel(len(self.ontology.names))
+        trainer = StageTrainer(
+            model,
+            self.config,
+            self.ontology,
+            output_dir=Path("outputs/tests/trainer"),
+        )
+        parameter_names = {
+            id(parameter): name for name, parameter in model.named_parameters()
+        }
+        grouped_ids = [
+            id(parameter)
+            for group in trainer.optimizer.param_groups
+            for parameter in group["params"]
+        ]
+        self.assertEqual(len(grouped_ids), len(set(grouped_ids)))
+        self.assertEqual(set(grouped_ids), set(parameter_names))
+
+        layer_norm_ids = {
+            id(parameter)
+            for module in model.modules()
+            if isinstance(module, nn.LayerNorm)
+            for parameter in module.parameters(recurse=False)
+        }
+        for group in trainer.optimizer.param_groups:
+            for parameter in group["params"]:
+                name = parameter_names[id(parameter)]
+                expected_lr = (
+                    float(self.config.training.plm_learning_rate)
+                    if "text_encoder.transformer" in name
+                    else float(self.config.training.learning_rate)
+                )
+                expected_decay = not (
+                    name.endswith(".bias") or id(parameter) in layer_norm_ids
+                )
+                self.assertEqual(group["lr"], expected_lr)
+                self.assertEqual(
+                    group["weight_decay"],
+                    float(self.config.training.weight_decay) if expected_decay else 0.0,
+                )
+
+        trainer._set_stage("finetune")
+        for group in trainer.optimizer.param_groups:
+            self.assertEqual(group["lr"], group["initial_lr"] * 0.1)
+
+    def test_transe_negative_sampling_replaces_head_or_tail(self):
+        model = DummyTrainerModel(len(self.ontology.names))
+        trainer = StageTrainer(
+            model,
+            self.config,
+            self.ontology,
+            output_dir=Path("outputs/tests/trainer"),
+        )
+        triples = torch.tensor(
+            [[0, 0, 1], [1, 0, 2], [2, 0, 3], [3, 0, 4]],
+            device=trainer.device,
+        )
+        with (
+            patch(
+                "trainers.stage_trainer.torch.rand",
+                return_value=torch.tensor(
+                    [0.1, 0.9, 0.2, 0.8], device=trainer.device
+                ),
+            ),
+            patch(
+                "trainers.stage_trainer.torch.randint",
+                return_value=torch.tensor(
+                    [4, 5, 6, 7], device=trainer.device
+                ),
+            ),
+        ):
+            negative = trainer._sample_negative_triples(triples)
+
+        expected = torch.tensor(
+            [[4, 0, 1], [1, 0, 5], [6, 0, 3], [3, 0, 7]],
+            device=trainer.device,
+        )
+        self.assertTrue(torch.equal(negative, expected))
 
 
 if __name__ == "__main__":
