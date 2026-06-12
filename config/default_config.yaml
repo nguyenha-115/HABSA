@@ -2,36 +2,47 @@ seed: 42
 device: auto
 output_dir: outputs
 
+pipeline:
+  output_dir: outputs/laptops/full/42
+  reasoner: false
+  max_records: null
+  max_test_records: null
+
 data:
   root: data/raw
   domain: Laptops
+  train_path: data/raw/Laptops/train.json
+  val_path: null
+  test_path: data/raw/Laptops/test.json
   max_length: 96
   min_frequency: 2
   validation_ratio: 0.1
-  num_workers: 0
+  graph_alpha: 0.6
+  num_workers: 2
 
 ontology:
   domain: laptop
   path: ontology/laptop_domain.owl
-  mapping_threshold: 0.45
+  mapping_threshold: 0.75
+  mapping_backend: tfidf
   embedding_dim: 128
   transe_margin: 1.0
   transe_epochs: 50
 
 model:
-  text_backend: bigru
+  text_backend: transformer
   pretrained_model: xlm-roberta-base
-  local_files_only: true
+  local_files_only: false
   vocab_size: 30000
-  embedding_dim: 192
-  hidden_dim: 256
-  ontology_dim: 128
+  embedding_dim: 128
+  hidden_dim: 192
+  ontology_dim: 96
   num_heads: 4
   dropout: 0.2
-  num_sentiments: 5
+  num_sentiments: 3
 
 training:
-  batch_size: 24
+  batch_size: 16
   learning_rate: 0.0003
   plm_learning_rate: 0.00002
   weight_decay: 0.01
@@ -40,12 +51,20 @@ training:
   main_epochs: 20
   finetune_epochs: 5
   patience: 5
-  alpha_main: 0.6
-  beta_sub: 0.4
+  min_delta: 0.0005
+  scheduler_factor: 0.5
+  scheduler_patience: 1
+  min_learning_rate: 0.000001
+  label_smoothing: 0.1
+  node_loss_weight: 0.15
+  class_weighting: true
+  max_generalization_gap: 0.15
+  gap_patience: 2
+  alpha_main: 0.4
+  beta_sub: 0.6
   lambda_mono: 0.1
   lambda_dom: 0.2
   lambda_cons: 0.1
-  lambda_kge: 0.05
 
 explainability:
   integrated_gradients_steps: 50

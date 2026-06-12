@@ -1,4 +1,4 @@
-from .embedders import (
+from .embedding import (
     DependencyGraphEncoder,
     HierarchyEncoder,
     TextEncoder,

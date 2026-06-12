@@ -3,16 +3,19 @@ from __future__ import annotations
 import argparse
 import json
 import random
+from datetime import datetime
 from pathlib import Path
 
 import torch
+import yaml
 from torch.utils.data import DataLoader
 
-from config import Config, apply_dotted_overrides, load_config
+from config import Config, load_config
 from data_loader import (
-    INDEX_TO_SCORE,
     OKEHABSADataset,
+    SENTIMENT_VALUES,
     TextPreprocessor,
+    TransformerTokenizer,
     VocabularyTokenizer,
     collate_oke_habsa,
     load_records,
@@ -23,19 +26,24 @@ from ontology import OntologyManager
 from trainers import StageTrainer, move_batch
 
 
-DATASET_TO_DOMAIN = {
-    "laptops": "laptop",
-    "restaurants": "restaurant",
-    "restaurants16": "restaurant",
-    "tweets": "social",
+SENTIMENT_NAMES = {
+    3: ["negative", "neutral", "positive"],
+    5: ["very_negative", "negative", "neutral", "positive", "very_positive"],
 }
-CANONICAL_DATASETS = {
-    "laptops": "Laptops",
-    "restaurants": "Restaurants",
-    "restaurants16": "Restaurants16",
-    "tweets": "Tweets",
-}
-SENTIMENT_NAMES = ["very_negative", "negative", "neutral", "positive", "very_positive"]
+
+
+class RunLogger:
+    def __init__(self, path: str | Path, reset: bool = False):
+        self.path = Path(path)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        if reset:
+            self.path.write_text("", encoding="utf-8")
+
+    def log(self, message: str) -> None:
+        line = f"{datetime.now().isoformat(timespec='seconds')} | {message}"
+        print(line, flush=True)
+        with self.path.open("a", encoding="utf-8") as handle:
+            handle.write(line + "\n")
 
 
 def set_seed(seed: int) -> None:
@@ -43,22 +51,21 @@ def set_seed(seed: int) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+    torch.use_deterministic_algorithms(False)
 
 
-def resolve_domain(dataset: str | None, configured: str) -> str:
-    return DATASET_TO_DOMAIN.get((dataset or "").lower(), configured)
-
-
-def canonical_dataset(dataset: str) -> str:
+def canonical_dataset(name: str) -> str:
+    choices = {
+        "laptop": "Laptops",
+        "laptops": "Laptops",
+    }
     try:
-        return CANONICAL_DATASETS[dataset.lower()]
+        return choices[name.lower()]
     except KeyError as exc:
-        raise ValueError(
-            f"Unknown dataset {dataset!r}; expected one of {list(CANONICAL_DATASETS.values())}"
-        ) from exc
+        raise ValueError("The implemented ontology currently supports Laptops only") from exc
 
 
-def make_loader(dataset, config, shuffle: bool = False) -> DataLoader:
+def make_loader(dataset, config, shuffle=False):
     return DataLoader(
         dataset,
         batch_size=int(config.training.batch_size),
@@ -68,135 +75,362 @@ def make_loader(dataset, config, shuffle: bool = False) -> DataLoader:
     )
 
 
-def split_records(records: list[dict], ratio: float, seed: int) -> tuple[list[dict], list[dict]]:
-    indices = list(range(len(records)))
-    random.Random(seed).shuffle(indices)
-    validation_size = max(1, int(len(indices) * ratio))
-    validation = {index for index in indices[:validation_size]}
-    return (
-        [record for index, record in enumerate(records) if index not in validation],
-        [record for index, record in enumerate(records) if index in validation],
-    )
+def split_records(records, ratio: float, seed: int, ontology=None):
+    ontology = ontology or OntologyManager("laptop")
+    strata = {}
+    for index, record in enumerate(records):
+        polarities = sorted(
+            {aspect.get("polarity", "neutral") for aspect in record.get("aspects", [])}
+        )
+        concepts = []
+        for aspect in record.get("aspects", []):
+            concept, _ = ontology.map_entity(aspect.get("term", []))
+            branch = next(
+                (
+                    name
+                    for name in reversed(ontology.ancestors(concept))
+                    if ontology.concepts[name].depth == 1
+                ),
+                concept,
+            )
+            concepts.append(branch)
+        signature = ("+".join(polarities), sorted(concepts)[0] if concepts else ontology.root)
+        strata.setdefault(signature, []).append(index)
+    rng = random.Random(seed)
+    validation_ids = set()
+    for members in strata.values():
+        rng.shuffle(members)
+        count = min(len(members) - 1, int(len(members) * ratio))
+        validation_ids.update(members[: max(0, count)])
+    target = max(1, round(len(records) * ratio))
+    remaining = [index for index in range(len(records)) if index not in validation_ids]
+    rng.shuffle(remaining)
+    validation_ids.update(remaining[: max(0, target - len(validation_ids))])
+    train = [(index, record) for index, record in enumerate(records) if index not in validation_ids]
+    validation = [(index, record) for index, record in enumerate(records) if index in validation_ids]
+    return train, validation
 
 
-def command_build_ontology(args, config) -> None:
-    domain = resolve_domain(args.dataset, str(config.ontology.domain))
-    ontology = OntologyManager(domain)
+def build_tokenizer(config, train_records=None):
+    if str(config.model.text_backend) == "transformer":
+        return TransformerTokenizer(
+            str(config.model.pretrained_model), bool(config.model.local_files_only)
+        )
+    tokenizer = VocabularyTokenizer()
+    if train_records is not None:
+        tokenizer.fit(
+            train_records,
+            int(config.data.min_frequency),
+            int(config.model.vocab_size),
+        )
+    return tokenizer
+
+
+def command_build_ontology(args, _config):
+    ontology = OntologyManager("laptop")
     errors = ontology.validate()
     if errors:
         raise RuntimeError("\n".join(errors))
-    output = Path(args.output or f"ontology/{domain}_domain.owl")
-    ontology.export_owl(output)
-    ontology.export_json(output.with_suffix(".json"))
-    ontology.export_tsv(output.with_suffix(".tsv"))
-    print(json.dumps({"domain": domain, "concepts": len(ontology.names), "owl": str(output)}))
+    artifacts = ontology.export_all(args.output or "ontology/laptop_domain.owl")
+    errors = ontology.validate_owl(artifacts["owl"], run_reasoner=args.reasoner)
+    if errors:
+        raise RuntimeError("\n".join(errors))
+    print(json.dumps({key: str(value) for key, value in artifacts.items()}, indent=2))
 
 
-def command_train(args, config) -> None:
+def command_train(args, config):
     dataset_name = canonical_dataset(args.dataset or str(config.data.domain))
-    domain = resolve_domain(dataset_name, str(config.ontology.domain))
-    config.data.domain = dataset_name
-    config.ontology.domain = domain
     if args.epochs is not None:
         config.training.warmup_epochs = min(1, args.epochs)
         config.training.main_epochs = max(0, args.epochs - 1)
         config.training.finetune_epochs = 0
-    if args.batch_size is not None:
-        config.training.batch_size = args.batch_size
-    output_dir = Path(args.output_dir or config.output_dir)
-    config.output_dir = str(output_dir)
+    if args.transe_epochs is not None:
+        config.ontology.transe_epochs = args.transe_epochs
+    output = Path(args.output_dir or config.output_dir)
+    output.mkdir(parents=True, exist_ok=True)
+    logger = getattr(args, "_logger", None) or RunLogger(output / "run.log", reset=True)
+    config.output_dir = str(output)
+    config.data.domain = dataset_name
     set_seed(int(config.seed))
+    logger.log(
+        f"[RUN] train_start dataset={dataset_name} seed={int(config.seed)} "
+        f"backend={config.model.text_backend} output={output}"
+    )
 
     records = load_records(Path(config.data.root) / dataset_name / "train.json")
-    if args.max_records is not None:
+    if args.max_records:
         records = records[: args.max_records]
-    train_records, validation_records = split_records(
-        records, float(config.data.validation_ratio), int(config.seed)
+    ontology = OntologyManager("laptop")
+    train_pairs, validation_pairs = split_records(
+        records, float(config.data.validation_ratio), int(config.seed), ontology
     )
-    tokenizer = VocabularyTokenizer()
-    tokenizer.fit(
-        train_records,
-        min_frequency=int(config.data.min_frequency),
-        max_size=int(config.model.vocab_size),
-    )
-    ontology = OntologyManager(domain)
+    train_records = [record for _, record in train_pairs]
+    validation_records = [record for _, record in validation_pairs]
+    tokenizer = build_tokenizer(config, train_records)
     preprocessor = TextPreprocessor(tokenizer, ontology, int(config.data.max_length))
+    common = {
+        "preprocessor": preprocessor,
+        "mapping_threshold": float(config.ontology.mapping_threshold),
+        "num_sentiments": int(config.model.num_sentiments),
+    }
     train_dataset = OKEHABSADataset(
-        train_records, preprocessor, float(config.ontology.mapping_threshold)
+        train_records,
+        sentence_ids=[index for index, _ in train_pairs],
+        **common,
     )
     validation_dataset = OKEHABSADataset(
-        validation_records, preprocessor, float(config.ontology.mapping_threshold)
+        validation_records,
+        sentence_ids=[index for index, _ in validation_pairs],
+        **common,
     )
-    model = OKEHABSANet(config, ontology, len(tokenizer.vocabulary))
-    trainer = StageTrainer(model, config, ontology, output_dir)
-    kge_losses = trainer.pretrain_transe(args.transe_epochs)
+    vocab_size = (
+        len(tokenizer.vocabulary)
+        if isinstance(tokenizer, VocabularyTokenizer)
+        else len(tokenizer.tokenizer)
+    )
+    model = OKEHABSANet(config, ontology, vocab_size)
+    trainer = StageTrainer(
+        model,
+        config,
+        ontology,
+        output,
+        class_weights=train_dataset.class_weights(),
+        log_callback=logger.log,
+    )
+    logger.log(
+        f"[DATA] train_sentences={len(train_records)} "
+        f"validation_sentences={len(validation_records)} "
+        f"train_aspects={len(train_dataset)} "
+        f"validation_aspects={len(validation_dataset)}"
+    )
+    kge_losses = trainer.pretrain_transe()
     history = trainer.fit(
-        make_loader(train_dataset, config, shuffle=True),
+        make_loader(train_dataset, config, True),
         make_loader(validation_dataset, config),
     )
-    tokenizer.save(output_dir / "vocab.json")
-    (output_dir / "resolved_config.json").write_text(
-        json.dumps(config.to_dict(), indent=2), encoding="utf-8"
+    tokenizer.save(output / "tokenizer.json")
+    (output / "resolved_config.yaml").write_text(
+        yaml.safe_dump(config.to_dict(), sort_keys=False), encoding="utf-8"
     )
-    ontology.export_owl(output_dir / f"{domain}_domain.owl")
+    manifest = {
+        "seed": int(config.seed),
+        "train_sentence_ids": [index for index, _ in train_pairs],
+        "validation_sentence_ids": [index for index, _ in validation_pairs],
+    }
+    (output / "split_manifest.json").write_text(
+        json.dumps(manifest, indent=2), encoding="utf-8"
+    )
+    artifacts = ontology.export_all(output / "ontology.owl")
+    mapping = {
+        "samples": len(train_dataset) + len(validation_dataset),
+        "root_fallback_rate": sum(
+            item["concept"] == ontology.root
+            for dataset in (train_dataset, validation_dataset)
+            for item in dataset.items
+        )
+        / max(1, len(train_dataset) + len(validation_dataset)),
+        "mean_confidence": sum(
+            item["mapping_confidence"]
+            for dataset in (train_dataset, validation_dataset)
+            for item in dataset.items
+        )
+        / max(1, len(train_dataset) + len(validation_dataset)),
+    }
+    (output / "mapping_report.json").write_text(
+        json.dumps(mapping, indent=2), encoding="utf-8"
+    )
+    (output / "explanations").mkdir(exist_ok=True)
     summary = {
         "train_aspects": len(train_dataset),
         "validation_aspects": len(validation_dataset),
-        "vocabulary": len(tokenizer.vocabulary),
         "transe_final_loss": kge_losses[-1] if kge_losses else None,
-        "last_epoch": history[-1] if history else None,
-        "checkpoint": str(output_dir / "best_model.pt"),
+        "best_checkpoint": str(output / "best_model.pt"),
+        "last_checkpoint": str(output / "last_model.pt"),
+        "epochs_completed": len(history),
+        "best_validation_macro_f1": max(
+            (float(row["validation"]["macro_f1"]) for row in history),
+            default=None,
+        ),
+        "ontology_hash": artifacts["sha256"],
     }
+    (output / "train_summary.json").write_text(
+        json.dumps(summary, indent=2), encoding="utf-8"
+    )
+    logger.log(
+        f"[RUN] train_completed epochs={summary['epochs_completed']} "
+        f"best_val_f1={summary['best_validation_macro_f1']} "
+        f"checkpoint={summary['best_checkpoint']}"
+    )
     print(json.dumps(summary, indent=2))
+    return summary
 
 
-def load_artifacts(checkpoint_path: str | Path):
+def load_artifacts(checkpoint_path):
     checkpoint_path = Path(checkpoint_path)
     payload = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
     config = Config.wrap(payload["config"])
     ontology = OntologyManager(payload["ontology_domain"])
-    tokenizer = VocabularyTokenizer.load(checkpoint_path.parent / "vocab.json")
-    model = OKEHABSANet(config, ontology, len(tokenizer.vocabulary))
+    metadata = json.loads(
+        (checkpoint_path.parent / "tokenizer.json").read_text(encoding="utf-8")
+    )
+    if metadata.get("type") == "transformer":
+        tokenizer = TransformerTokenizer(
+            metadata["model_name"], bool(config.model.local_files_only)
+        )
+        vocab_size = len(tokenizer.tokenizer)
+    else:
+        tokenizer = VocabularyTokenizer.load(checkpoint_path.parent / "tokenizer.json")
+        vocab_size = len(tokenizer.vocabulary)
+    model = OKEHABSANet(config, ontology, vocab_size)
     trainer = StageTrainer(model, config, ontology, checkpoint_path.parent)
     trainer.load_checkpoint(checkpoint_path)
     return config, ontology, tokenizer, model, trainer
 
 
-def command_evaluate(args, _config) -> None:
-    config, ontology, tokenizer, model, trainer = load_artifacts(args.checkpoint)
-    dataset_name = canonical_dataset(args.dataset or str(config.data.domain))
-    records = load_records(Path(config.data.root) / dataset_name / "test.json")
-    if args.max_records is not None:
+def command_evaluate(args, _config):
+    config, ontology, tokenizer, _, trainer = load_artifacts(args.checkpoint)
+    records = load_records(Path(config.data.root) / canonical_dataset(args.dataset) / "test.json")
+    if args.max_records:
         records = records[: args.max_records]
-    preprocessor = TextPreprocessor(tokenizer, ontology, int(config.data.max_length))
-    dataset = OKEHABSADataset(records, preprocessor, float(config.ontology.mapping_threshold))
+    dataset = OKEHABSADataset(
+        records,
+        TextPreprocessor(tokenizer, ontology, int(config.data.max_length)),
+        float(config.ontology.mapping_threshold),
+        int(config.model.num_sentiments),
+    )
     metrics = trainer.evaluate(make_loader(dataset, config))
     metrics["samples"] = len(dataset)
+    target = Path(args.checkpoint).parent / "test_metrics.json"
+    target.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+    (Path(args.checkpoint).parent / "per_class_metrics.json").write_text(
+        json.dumps(metrics["per_class"], indent=2), encoding="utf-8"
+    )
+    logger = getattr(args, "_logger", None)
+    if logger is not None:
+        logger.log(
+            f"[TEST] samples={metrics['samples']} loss={float(metrics['total']):.4f} "
+            f"macro_f1={float(metrics['macro_f1']):.4f} "
+            f"accuracy={float(metrics['accuracy']):.4f} "
+            f"mae={float(metrics['mae']):.4f} "
+            f"oc={float(metrics['ontological_consistency']):.4f}"
+        )
     print(json.dumps(metrics, indent=2))
+    return metrics
 
 
-def make_inference_batch(text: str, aspect: str, tokenizer, ontology, config):
+def command_run_pipeline(args, config):
+    output = Path(args.output_dir)
+    output.mkdir(parents=True, exist_ok=True)
+    logger = RunLogger(output / "run.log", reset=True)
+    started_at = datetime.now().isoformat(timespec="seconds")
+    logger.log(
+        f"[PIPELINE] start dataset={args.dataset} output={output} "
+        f"reasoner={args.reasoner}"
+    )
+
+    ontology = OntologyManager("laptop")
+    errors = ontology.validate()
+    if errors:
+        raise RuntimeError("\n".join(errors))
+    ontology_artifacts = ontology.export_all(output / "ontology.owl")
+    errors = ontology.validate_owl(
+        ontology_artifacts["owl"], run_reasoner=args.reasoner
+    )
+    if errors:
+        raise RuntimeError("\n".join(errors))
+    logger.log(
+        f"[ONTOLOGY] concepts={len(ontology.names)} "
+        f"edges={len(ontology.hierarchy_edges())} "
+        f"hash={ontology_artifacts['sha256']}"
+    )
+
+    train_args = argparse.Namespace(
+        dataset=args.dataset,
+        output_dir=str(output),
+        epochs=None,
+        transe_epochs=None,
+        max_records=args.max_records,
+        _logger=logger,
+    )
+    train_summary = command_train(train_args, config)
+    checkpoint = Path(train_summary["best_checkpoint"])
+    if not checkpoint.exists():
+        raise RuntimeError(f"Best checkpoint was not created: {checkpoint}")
+
+    evaluate_args = argparse.Namespace(
+        checkpoint=str(checkpoint),
+        dataset=args.dataset,
+        max_records=args.max_test_records,
+        _logger=logger,
+    )
+    test_metrics = command_evaluate(evaluate_args, config)
+    results = {
+        "status": "completed",
+        "started_at": started_at,
+        "completed_at": datetime.now().isoformat(timespec="seconds"),
+        "dataset": canonical_dataset(args.dataset),
+        "output_dir": str(output),
+        "ontology": {
+            "concepts": len(ontology.names),
+            "hierarchy_edges": len(ontology.hierarchy_edges()),
+            "hash": ontology_artifacts["sha256"],
+        },
+        "training": train_summary,
+        "test": test_metrics,
+        "artifacts": {
+            "run_log": str(output / "run.log"),
+            "history": str(output / "history.json"),
+            "best_checkpoint": str(checkpoint),
+            "test_metrics": str(output / "test_metrics.json"),
+            "per_class_metrics": str(output / "per_class_metrics.json"),
+        },
+    }
+    results_path = output / "pipeline_results.json"
+    results_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    logger.log(
+        f"[PIPELINE] completed test_f1={float(test_metrics['macro_f1']):.4f} "
+        f"test_acc={float(test_metrics['accuracy']):.4f} "
+        f"test_mae={float(test_metrics['mae']):.4f} "
+        f"test_oc={float(test_metrics['ontological_consistency']):.4f} "
+        f"results={results_path}"
+    )
+    print(json.dumps(results, indent=2))
+    return results
+
+
+def make_inference_batch(text, aspect, tokenizer, ontology, config):
     tokens = tokenizer.tokenize(text)
     aspect_tokens = tokenizer.tokenize(aspect)
-    normalized = [tokenizer.normalize(token) for token in tokens]
-    target = [tokenizer.normalize(token) for token in aspect_tokens]
+    normalized = [token.lower() for token in tokens]
+    target = [token.lower() for token in aspect_tokens]
     start = next(
         (
             index
             for index in range(len(tokens) - len(target) + 1)
             if normalized[index : index + len(target)] == target
         ),
-        0,
+        None,
     )
-    end = min(len(tokens), start + max(1, len(target)))
-    record = {
-        "token": tokens,
-        "aspects": [
-            {"term": aspect_tokens, "from": start, "to": end, "polarity": "neutral"}
+    if start is None:
+        raise ValueError("The aspect must occur verbatim in the input text")
+    dataset = OKEHABSADataset(
+        [
+            {
+                "token": tokens,
+                "aspects": [
+                    {
+                        "term": aspect_tokens,
+                        "from": start,
+                        "to": start + len(target),
+                        "polarity": "neutral",
+                    }
+                ],
+            }
         ],
-    }
-    preprocessor = TextPreprocessor(tokenizer, ontology, int(config.data.max_length))
-    dataset = OKEHABSADataset([record], preprocessor, float(config.ontology.mapping_threshold))
+        TextPreprocessor(tokenizer, ontology, int(config.data.max_length)),
+        float(config.ontology.mapping_threshold),
+        int(config.model.num_sentiments),
+    )
     return collate_oke_habsa([dataset[0]])
 
 
@@ -208,109 +442,98 @@ def predict_payload(args):
     )
     model.eval()
     with torch.no_grad():
-        outputs = model(
-            input_ids=batch["input_ids"],
-            attention_mask=batch["attention_mask"],
-            aspect_mask=batch["aspect_mask"],
-            concept_id=batch["concept_id"],
-            main_concept_id=batch["main_concept_id"],
-            dependency=batch["dependency"],
-        )
-        probabilities = torch.softmax(outputs["logits"], dim=-1)[0]
-    prediction = int(probabilities.argmax().item())
-    payload = {
-        "text": args.text,
+        outputs = model(**batch)
+        probabilities = torch.softmax(outputs["logits"], -1)[0]
+    prediction = int(probabilities.argmax())
+    names = SENTIMENT_NAMES[int(config.model.num_sentiments)]
+    return {
         "aspect": args.aspect,
         "ontology_concept": batch["concept"][0],
-        "sentiment": SENTIMENT_NAMES[prediction],
-        "score": float(INDEX_TO_SCORE[prediction].item()),
+        "sentiment": names[prediction],
+        "score": float(SENTIMENT_VALUES[len(names)][prediction]),
         "probabilities": {
-            name: float(probabilities[index].item())
-            for index, name in enumerate(SENTIMENT_NAMES)
+            name: float(probabilities[index]) for index, name in enumerate(names)
         },
-    }
-    return payload, batch, outputs, ontology, model, config
+    }, batch, outputs, ontology, model, config
 
 
-def command_predict(args, _config) -> None:
+def command_predict(args, _config):
     payload, *_ = predict_payload(args)
     print(json.dumps(payload, indent=2))
 
 
-def command_explain(args, _config) -> None:
+def command_explain(args, _config):
     payload, batch, outputs, ontology, model, config = predict_payload(args)
-    ig = TokenIntegratedGradients(
-        model, steps=args.steps or int(config.explainability.integrated_gradients_steps)
-    )
-    token_result = ig.attribute(batch)
-    concept_explainer = ConceptAttribution(model, ontology)
-    concept_scores = concept_explainer.aggregate(
-        token_result["token_scores"], batch["token_concept_ids"]
+    attribution = TokenIntegratedGradients(
+        model, args.steps or int(config.explainability.integrated_gradients_steps)
+    ).attribute(batch)
+    payload["token_attributions"] = attribution["normalized_scores"][0].tolist()
+    payload["concept_attributions"] = ConceptAttribution(model, ontology).aggregate(
+        attribution["token_scores"], batch["token_concept_ids"]
     )[0]
-    structural = StructuralExplainer(ontology)
-    payload["token_attributions"] = [
-        {
-            "token": token,
-            "score": float(token_result["normalized_scores"][0, index].item()),
-        }
-        for index, token in enumerate(batch["tokens"][0])
-    ]
-    payload["concept_attributions"] = concept_scores
-    payload["propagation_path"] = structural.active_path(
+    payload["propagation_path"] = StructuralExplainer(ontology).active_path(
         outputs, batch["concept"][0]
-    )
-    payload["counterfactual_positive"] = structural.counterfactual(
-        outputs, batch["concept"][0], 1.0
     )
     print(json.dumps(payload, indent=2))
 
 
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="OKE-HABSA pipeline")
-    parser.add_argument("--config", help="YAML configuration file")
-    parser.add_argument(
-        "--set", action="append", default=[], metavar="KEY=VALUE", help="Override config"
+def build_parser():
+    parser = argparse.ArgumentParser(
+        description=(
+            "OKE-HABSA pipeline. Run without a subcommand to execute the full "
+            "pipeline using config/default_config.yaml."
+        )
     )
-    subparsers = parser.add_subparsers(dest="command", required=True)
-
-    ontology_parser = subparsers.add_parser("build-ontology")
-    ontology_parser.add_argument("--dataset")
-    ontology_parser.add_argument("--output")
-    ontology_parser.set_defaults(handler=command_build_ontology)
-
-    train_parser = subparsers.add_parser("train")
-    train_parser.add_argument("--dataset")
-    train_parser.add_argument("--output-dir")
-    train_parser.add_argument("--epochs", type=int)
-    train_parser.add_argument("--batch-size", type=int)
-    train_parser.add_argument("--transe-epochs", type=int)
-    train_parser.add_argument(
-        "--max-records", type=int, help="Limit input sentences for smoke runs"
-    )
-    train_parser.set_defaults(handler=command_train)
-
-    evaluate_parser = subparsers.add_parser("evaluate")
-    evaluate_parser.add_argument("--checkpoint", required=True)
-    evaluate_parser.add_argument("--dataset")
-    evaluate_parser.add_argument("--max-records", type=int)
-    evaluate_parser.set_defaults(handler=command_evaluate)
-
-    for name, handler in [("predict", command_predict), ("explain", command_explain)]:
-        inference_parser = subparsers.add_parser(name)
-        inference_parser.add_argument("--checkpoint", required=True)
-        inference_parser.add_argument("--text", required=True)
-        inference_parser.add_argument("--aspect", required=True)
+    parser.add_argument("--config")
+    sub = parser.add_subparsers(dest="command")
+    build = sub.add_parser("build-ontology")
+    build.add_argument("--dataset", default="Laptops")
+    build.add_argument("--output")
+    build.add_argument("--reasoner", action="store_true")
+    build.set_defaults(handler=command_build_ontology)
+    train = sub.add_parser("train")
+    train.add_argument("--dataset", default="Laptops")
+    train.add_argument("--output-dir")
+    train.add_argument("--epochs", type=int)
+    train.add_argument("--transe-epochs", type=int)
+    train.add_argument("--max-records", type=int)
+    train.set_defaults(handler=command_train)
+    evaluate = sub.add_parser("evaluate")
+    evaluate.add_argument("--checkpoint", required=True)
+    evaluate.add_argument("--dataset", default="Laptops")
+    evaluate.add_argument("--max-records", type=int)
+    evaluate.set_defaults(handler=command_evaluate)
+    for name, handler in (("predict", command_predict), ("explain", command_explain)):
+        command = sub.add_parser(name)
+        command.add_argument("--checkpoint", required=True)
+        command.add_argument("--text", required=True)
+        command.add_argument("--aspect", required=True)
         if name == "explain":
-            inference_parser.add_argument("--steps", type=int)
-        inference_parser.set_defaults(handler=handler)
+            command.add_argument("--steps", type=int)
+        command.set_defaults(handler=handler)
     return parser
 
 
-def main() -> None:
-    parser = build_parser()
-    args = parser.parse_args()
-    config = apply_dotted_overrides(load_config(args.config), args.set)
-    args.handler(args, config)
+def pipeline_args_from_config(config):
+    pipeline = config.pipeline
+    return argparse.Namespace(
+        dataset=str(config.data.domain),
+        output_dir=str(pipeline.output_dir),
+        epochs=None,
+        transe_epochs=None,
+        max_records=pipeline.max_records,
+        max_test_records=pipeline.max_test_records,
+        reasoner=bool(pipeline.reasoner),
+    )
+
+
+def main():
+    args = build_parser().parse_args()
+    config = load_config(args.config)
+    if args.command is None:
+        command_run_pipeline(pipeline_args_from_config(config), config)
+    else:
+        args.handler(args, config)
 
 
 if __name__ == "__main__":

@@ -1,2 +1,833 @@
-<?xml version='1.0' encoding='utf-8'?>
-<rdf:RDF xmlns:oke="http://example.org/oke-habsa/laptop#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"><owl:Ontology rdf:about="http://example.org/oke-habsa/laptop" /><owl:ObjectProperty rdf:about="http://example.org/oke-habsa/laptop#hasSubAspect" /><owl:ObjectProperty rdf:about="http://example.org/oke-habsa/laptop#relatesTo" /><owl:ObjectProperty rdf:about="http://example.org/oke-habsa/laptop#influences" /><owl:ObjectProperty rdf:about="http://example.org/oke-habsa/laptop#contradicts" /><owl:ObjectProperty rdf:about="http://example.org/oke-habsa/laptop#synonymOf" /><owl:DatatypeProperty rdf:about="http://example.org/oke-habsa/laptop#aspectLabel" /><owl:DatatypeProperty rdf:about="http://example.org/oke-habsa/laptop#domainName" /><owl:DatatypeProperty rdf:about="http://example.org/oke-habsa/laptop#sentimentWeight" /><owl:DatatypeProperty rdf:about="http://example.org/oke-habsa/laptop#isCritical" /><owl:DatatypeProperty rdf:about="http://example.org/oke-habsa/laptop#ontologyDepth" /><owl:Class rdf:about="http://example.org/oke-habsa/laptop#LaptopAspect"><rdfs:label xml:lang="en">laptop</rdfs:label><rdfs:label xml:lang="en">computer</rdfs:label><rdfs:label xml:lang="en">notebook</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>0</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#HardwareAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">hardware</rdfs:label><rdfs:label xml:lang="en">build</rdfs:label><rdfs:label xml:lang="en">device</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#DisplayAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">screen</rdfs:label><rdfs:label xml:lang="en">display</rdfs:label><rdfs:label xml:lang="en">monitor</rdfs:label><rdfs:label xml:lang="en">lcd</rdfs:label><rdfs:label xml:lang="en">graphics</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#BrightnessAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#DisplayAspect" /><rdfs:label xml:lang="en">brightness</rdfs:label><rdfs:label xml:lang="en">bright</rdfs:label><rdfs:label xml:lang="en">dim</rdfs:label><rdfs:label xml:lang="en">backlight</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#ResolutionAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#DisplayAspect" /><rdfs:label xml:lang="en">resolution</rdfs:label><rdfs:label xml:lang="en">pixels</rdfs:label><rdfs:label xml:lang="en">retina</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#ColorAccuracyAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#DisplayAspect" /><rdfs:label xml:lang="en">color</rdfs:label><rdfs:label xml:lang="en">colour</rdfs:label><rdfs:label xml:lang="en">contrast</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#BatteryAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">battery</rdfs:label><rdfs:label xml:lang="en">power</rdfs:label><rdfs:label xml:lang="en">charge</rdfs:label><rdfs:label xml:lang="en">charger</rdfs:label><rdfs:label xml:lang="en">battery life</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.5</oke:sentimentWeight><oke:isCritical>true</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#BatteryLifeAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#BatteryAspect" /><rdfs:label xml:lang="en">battery life</rdfs:label><rdfs:label xml:lang="en">runtime</rdfs:label><rdfs:label xml:lang="en">battery duration</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.6</oke:sentimentWeight><oke:isCritical>true</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#ChargingSpeedAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#BatteryAspect" /><rdfs:label xml:lang="en">charging speed</rdfs:label><rdfs:label xml:lang="en">fast charge</rdfs:label><rdfs:label xml:lang="en">recharge</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#KeyboardAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">keyboard</rdfs:label><rdfs:label xml:lang="en">keys</rdfs:label><rdfs:label xml:lang="en">typing</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#KeyTravelAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#KeyboardAspect" /><rdfs:label xml:lang="en">key travel</rdfs:label><rdfs:label xml:lang="en">keystroke</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#KeyLayoutAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#KeyboardAspect" /><rdfs:label xml:lang="en">key layout</rdfs:label><rdfs:label xml:lang="en">layout</rdfs:label><rdfs:label xml:lang="en">numpad</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#TouchpadAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">touchpad</rdfs:label><rdfs:label xml:lang="en">trackpad</rdfs:label><rdfs:label xml:lang="en">mouse pad</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#TouchpadResponsivenessAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#TouchpadAspect" /><rdfs:label xml:lang="en">touchpad responsiveness</rdfs:label><rdfs:label xml:lang="en">responsive touchpad</rdfs:label><rdfs:label xml:lang="en">cursor</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#TouchpadSizeAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#TouchpadAspect" /><rdfs:label xml:lang="en">touchpad size</rdfs:label><rdfs:label xml:lang="en">large touchpad</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>3</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#StorageAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">storage</rdfs:label><rdfs:label xml:lang="en">hard drive</rdfs:label><rdfs:label xml:lang="en">disk</rdfs:label><rdfs:label xml:lang="en">ssd</rdfs:label><rdfs:label xml:lang="en">drive</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#AudioAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">audio</rdfs:label><rdfs:label xml:lang="en">sound</rdfs:label><rdfs:label xml:lang="en">speaker</rdfs:label><rdfs:label xml:lang="en">speakers</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#ConnectivityAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#HardwareAspect" /><rdfs:label xml:lang="en">wifi</rdfs:label><rdfs:label xml:lang="en">wireless</rdfs:label><rdfs:label xml:lang="en">bluetooth</rdfs:label><rdfs:label xml:lang="en">port</rdfs:label><rdfs:label xml:lang="en">ports</rdfs:label><rdfs:label xml:lang="en">usb</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#PerformanceAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">performance</rdfs:label><rdfs:label xml:lang="en">speed</rdfs:label><rdfs:label xml:lang="en">fast</rdfs:label><rdfs:label xml:lang="en">slow</rdfs:label><rdfs:label xml:lang="en">lag</rdfs:label><rdfs:label xml:lang="en">runs</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.3</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#ProcessingSpeedAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#PerformanceAspect" /><rdfs:label xml:lang="en">processor</rdfs:label><rdfs:label xml:lang="en">cpu</rdfs:label><rdfs:label xml:lang="en">processing speed</rdfs:label><rdfs:label xml:lang="en">programs</rdfs:label><rdfs:label xml:lang="en">applications</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#MemoryAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#PerformanceAspect" /><rdfs:label xml:lang="en">memory</rdfs:label><rdfs:label xml:lang="en">ram</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#SoftwareAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">software</rdfs:label><rdfs:label xml:lang="en">windows</rdfs:label><rdfs:label xml:lang="en">operating system</rdfs:label><rdfs:label xml:lang="en">program</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#PortabilityAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">portability</rdfs:label><rdfs:label xml:lang="en">portable</rdfs:label><rdfs:label xml:lang="en">travel</rdfs:label><rdfs:label xml:lang="en">mobility</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#WeightAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#PortabilityAspect" /><rdfs:label xml:lang="en">weight</rdfs:label><rdfs:label xml:lang="en">lightweight</rdfs:label><rdfs:label xml:lang="en">heavy</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#DimensionsAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#PortabilityAspect" /><rdfs:label xml:lang="en">size</rdfs:label><rdfs:label xml:lang="en">dimensions</rdfs:label><rdfs:label xml:lang="en">thin</rdfs:label><rdfs:label xml:lang="en">thickness</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>2</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#DesignAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">design</rdfs:label><rdfs:label xml:lang="en">look</rdfs:label><rdfs:label xml:lang="en">appearance</rdfs:label><rdfs:label xml:lang="en">quality</rdfs:label><rdfs:label xml:lang="en">build quality</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#PriceAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">price</rdfs:label><rdfs:label xml:lang="en">cost</rdfs:label><rdfs:label xml:lang="en">value</rdfs:label><rdfs:label xml:lang="en">expensive</rdfs:label><rdfs:label xml:lang="en">cheap</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class><owl:Class rdf:about="http://example.org/oke-habsa/laptop#SupportAspect"><rdfs:subClassOf rdf:resource="http://example.org/oke-habsa/laptop#LaptopAspect" /><rdfs:label xml:lang="en">support</rdfs:label><rdfs:label xml:lang="en">warranty</rdfs:label><rdfs:label xml:lang="en">service</rdfs:label><rdfs:label xml:lang="en">customer service</rdfs:label><oke:domainName>laptop</oke:domainName><oke:sentimentWeight>1.0</oke:sentimentWeight><oke:isCritical>false</oke:isCritical><oke:ontologyDepth>1</oke:ontologyDepth></owl:Class></rdf:RDF>
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="https://example.org/oke-habsa/laptop.owl"
+         xmlns="https://example.org/oke-habsa/laptop.owl#"
+         xmlns:swrl="http://www.w3.org/2003/11/swrl#">
+
+<owl:Ontology rdf:about="https://example.org/oke-habsa/laptop.owl"/>
+
+<owl:ObjectProperty rdf:about="#hasSubAspect">
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="#Aspect"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#relatesTo">
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="#Aspect"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#influences">
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="#Aspect"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#contradicts">
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="#Aspect"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#synonymOf">
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="#Aspect"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#aspectLabel">
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#domainName">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#sentimentWeight">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isCritical">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#ontologyDepth">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasSentimentScore">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasHighImpact">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aspect"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Review">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Aspect">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LaptopAspect">
+  <rdfs:subClassOf rdf:resource="#Aspect"/>
+  <rdfs:label xml:lang="en">laptop</rdfs:label>
+  <rdfs:label xml:lang="en">laptops</rdfs:label>
+  <rdfs:label xml:lang="en">computer</rdfs:label>
+  <rdfs:label xml:lang="en">computers</rdfs:label>
+  <rdfs:label xml:lang="en">notebook</rdfs:label>
+  <rdfs:label xml:lang="en">use</rdfs:label>
+  <rdfs:label xml:lang="en">usage</rdfs:label>
+  <rdfs:label xml:lang="vi">máy tính xách tay</rdfs:label>
+  <rdfs:label xml:lang="de">Laptop</rdfs:label>
+  <rdfs:label xml:lang="de">Notebook</rdfs:label>
+  <rdfs:label xml:lang="fr">ordinateur portable</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#HardwareAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">hardware</rdfs:label>
+  <rdfs:label xml:lang="en">device</rdfs:label>
+  <rdfs:label xml:lang="en">specs</rdfs:label>
+  <rdfs:label xml:lang="en">motherboard</rdfs:label>
+  <rdfs:label xml:lang="en">mother board</rdfs:label>
+  <rdfs:label xml:lang="en">bios</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#PerformanceAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">performance</rdfs:label>
+  <rdfs:label xml:lang="en">speed</rdfs:label>
+  <rdfs:label xml:lang="en">fast</rdfs:label>
+  <rdfs:label xml:lang="en">slow</rdfs:label>
+  <rdfs:label xml:lang="en">lag</rdfs:label>
+  <rdfs:label xml:lang="en">runs</rdfs:label>
+  <rdfs:label xml:lang="en">works</rdfs:label>
+  <rdfs:label xml:lang="en">work</rdfs:label>
+  <rdfs:label xml:lang="en">gaming</rdfs:label>
+  <rdfs:label xml:lang="en">games</rdfs:label>
+  <rdfs:label xml:lang="en">boot up</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SoftwareAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">software</rdfs:label>
+  <rdfs:label xml:lang="en">windows</rdfs:label>
+  <rdfs:label xml:lang="en">windows 7</rdfs:label>
+  <rdfs:label xml:lang="en">vista</rdfs:label>
+  <rdfs:label xml:lang="en">operating system</rdfs:label>
+  <rdfs:label xml:lang="en">system</rdfs:label>
+  <rdfs:label xml:lang="en">os</rdfs:label>
+  <rdfs:label xml:lang="en">program</rdfs:label>
+  <rdfs:label xml:lang="en">drivers</rdfs:label>
+  <rdfs:label xml:lang="en">features</rdfs:label>
+  <rdfs:label xml:lang="en">feature</rdfs:label>
+  <rdfs:label xml:lang="en">iwork</rdfs:label>
+  <rdfs:label xml:lang="en">ilife</rdfs:label>
+  <rdfs:label xml:lang="en">iphoto</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#PortabilityAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">portability</rdfs:label>
+  <rdfs:label xml:lang="en">portable</rdfs:label>
+  <rdfs:label xml:lang="en">travel</rdfs:label>
+  <rdfs:label xml:lang="en">mobility</rdfs:label>
+  <rdfs:label xml:lang="en">carry</rdfs:label>
+  <rdfs:label xml:lang="en">shipping</rdfs:label>
+  <rdfs:label xml:lang="en">delivery</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#DesignAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">design</rdfs:label>
+  <rdfs:label xml:lang="en">look</rdfs:label>
+  <rdfs:label xml:lang="en">appearance</rdfs:label>
+  <rdfs:label xml:lang="en">quality</rdfs:label>
+  <rdfs:label xml:lang="en">build</rdfs:label>
+  <rdfs:label xml:lang="en">build quality</rdfs:label>
+  <rdfs:label xml:lang="en">hinge</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#PriceAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">price</rdfs:label>
+  <rdfs:label xml:lang="en">prices</rdfs:label>
+  <rdfs:label xml:lang="en">cost</rdfs:label>
+  <rdfs:label xml:lang="en">value</rdfs:label>
+  <rdfs:label xml:lang="en">expensive</rdfs:label>
+  <rdfs:label xml:lang="en">cheap</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SupportAspect">
+  <rdfs:subClassOf rdf:resource="#LaptopAspect"/>
+  <rdfs:label xml:lang="en">support</rdfs:label>
+  <rdfs:label xml:lang="en">tech support</rdfs:label>
+  <rdfs:label xml:lang="en">warranty</rdfs:label>
+  <rdfs:label xml:lang="en">warrenty</rdfs:label>
+  <rdfs:label xml:lang="en">extended warranty</rdfs:label>
+  <rdfs:label xml:lang="en">service</rdfs:label>
+  <rdfs:label xml:lang="en">customer service</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#DisplayAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">screen</rdfs:label>
+  <rdfs:label xml:lang="en">screens</rdfs:label>
+  <rdfs:label xml:lang="en">display</rdfs:label>
+  <rdfs:label xml:lang="en">monitor</rdfs:label>
+  <rdfs:label xml:lang="en">lcd</rdfs:label>
+  <rdfs:label xml:lang="en">graphics</rdfs:label>
+  <rdfs:label xml:lang="en">screen size</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatteryAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">battery</rdfs:label>
+  <rdfs:label xml:lang="en">batteries</rdfs:label>
+  <rdfs:label xml:lang="en">power</rdfs:label>
+  <rdfs:label xml:lang="en">charge</rdfs:label>
+  <rdfs:label xml:lang="en">charger</rdfs:label>
+  <rdfs:label xml:lang="en">power supply</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#KeyboardAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">keyboard</rdfs:label>
+  <rdfs:label xml:lang="en">keyboards</rdfs:label>
+  <rdfs:label xml:lang="en">key</rdfs:label>
+  <rdfs:label xml:lang="en">keys</rdfs:label>
+  <rdfs:label xml:lang="en">typing</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TouchpadAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">touchpad</rdfs:label>
+  <rdfs:label xml:lang="en">touch pad</rdfs:label>
+  <rdfs:label xml:lang="en">trackpad</rdfs:label>
+  <rdfs:label xml:lang="en">mousepad</rdfs:label>
+  <rdfs:label xml:lang="en">mouse pad</rdfs:label>
+  <rdfs:label xml:lang="en">mouse</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#StorageAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">storage</rdfs:label>
+  <rdfs:label xml:lang="en">hard drive</rdfs:label>
+  <rdfs:label xml:lang="en">hard drives</rdfs:label>
+  <rdfs:label xml:lang="en">disk</rdfs:label>
+  <rdfs:label xml:lang="en">ssd</rdfs:label>
+  <rdfs:label xml:lang="en">drive</rdfs:label>
+  <rdfs:label xml:lang="en">cd drive</rdfs:label>
+  <rdfs:label xml:lang="en">space</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#AudioAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">audio</rdfs:label>
+  <rdfs:label xml:lang="en">sound</rdfs:label>
+  <rdfs:label xml:lang="en">speaker</rdfs:label>
+  <rdfs:label xml:lang="en">speakers</rdfs:label>
+  <rdfs:label xml:lang="en">fan</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ConnectivityAspect">
+  <rdfs:subClassOf rdf:resource="#HardwareAspect"/>
+  <rdfs:label xml:lang="en">wifi</rdfs:label>
+  <rdfs:label xml:lang="en">wi-fi</rdfs:label>
+  <rdfs:label xml:lang="en">wireless</rdfs:label>
+  <rdfs:label xml:lang="en">bluetooth</rdfs:label>
+  <rdfs:label xml:lang="en">port</rdfs:label>
+  <rdfs:label xml:lang="en">ports</rdfs:label>
+  <rdfs:label xml:lang="en">usb</rdfs:label>
+  <rdfs:label xml:lang="en">webcam</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ProcessingSpeedAspect">
+  <rdfs:subClassOf rdf:resource="#PerformanceAspect"/>
+  <rdfs:label xml:lang="en">processor</rdfs:label>
+  <rdfs:label xml:lang="en">cpu</rdfs:label>
+  <rdfs:label xml:lang="en">processing speed</rdfs:label>
+  <rdfs:label xml:lang="en">programs</rdfs:label>
+  <rdfs:label xml:lang="en">applications</rdfs:label>
+  <rdfs:label xml:lang="en">web browsing</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#MemoryAspect">
+  <rdfs:subClassOf rdf:resource="#PerformanceAspect"/>
+  <rdfs:label xml:lang="en">memory</rdfs:label>
+  <rdfs:label xml:lang="en">ram</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#WeightAspect">
+  <rdfs:subClassOf rdf:resource="#PortabilityAspect"/>
+  <rdfs:label xml:lang="en">weight</rdfs:label>
+  <rdfs:label xml:lang="en">lightweight</rdfs:label>
+  <rdfs:label xml:lang="en">heavy</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#DimensionsAspect">
+  <rdfs:subClassOf rdf:resource="#PortabilityAspect"/>
+  <rdfs:label xml:lang="en">size</rdfs:label>
+  <rdfs:label xml:lang="en">dimensions</rdfs:label>
+  <rdfs:label xml:lang="en">thin</rdfs:label>
+  <rdfs:label xml:lang="en">thickness</rdfs:label>
+  <rdfs:label xml:lang="en">edges</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BrightnessAspect">
+  <rdfs:subClassOf rdf:resource="#DisplayAspect"/>
+  <rdfs:label xml:lang="en">brightness</rdfs:label>
+  <rdfs:label xml:lang="en">bright</rdfs:label>
+  <rdfs:label xml:lang="en">dim</rdfs:label>
+  <rdfs:label xml:lang="en">backlight</rdfs:label>
+  <rdfs:label xml:lang="en">glare</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ResolutionAspect">
+  <rdfs:subClassOf rdf:resource="#DisplayAspect"/>
+  <rdfs:label xml:lang="en">resolution</rdfs:label>
+  <rdfs:label xml:lang="en">pixel</rdfs:label>
+  <rdfs:label xml:lang="en">pixels</rdfs:label>
+  <rdfs:label xml:lang="en">retina</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ColorAccuracyAspect">
+  <rdfs:subClassOf rdf:resource="#DisplayAspect"/>
+  <rdfs:label xml:lang="en">color</rdfs:label>
+  <rdfs:label xml:lang="en">colors</rdfs:label>
+  <rdfs:label xml:lang="en">colour</rdfs:label>
+  <rdfs:label xml:lang="en">colours</rdfs:label>
+  <rdfs:label xml:lang="en">contrast</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#BatteryLifeAspect">
+  <rdfs:subClassOf rdf:resource="#BatteryAspect"/>
+  <rdfs:label xml:lang="en">battery life</rdfs:label>
+  <rdfs:label xml:lang="en">battery duration</rdfs:label>
+  <rdfs:label xml:lang="en">runtime</rdfs:label>
+  <rdfs:label xml:lang="en">unplugged time</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ChargingSpeedAspect">
+  <rdfs:subClassOf rdf:resource="#BatteryAspect"/>
+  <rdfs:label xml:lang="en">charging speed</rdfs:label>
+  <rdfs:label xml:lang="en">charge time</rdfs:label>
+  <rdfs:label xml:lang="en">fast charge</rdfs:label>
+  <rdfs:label xml:lang="en">recharge</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#KeyTravelAspect">
+  <rdfs:subClassOf rdf:resource="#KeyboardAspect"/>
+  <rdfs:label xml:lang="en">key travel</rdfs:label>
+  <rdfs:label xml:lang="en">keystroke</rdfs:label>
+  <rdfs:label xml:lang="en">keystrokes</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#KeyLayoutAspect">
+  <rdfs:subClassOf rdf:resource="#KeyboardAspect"/>
+  <rdfs:label xml:lang="en">key layout</rdfs:label>
+  <rdfs:label xml:lang="en">keyboard layout</rdfs:label>
+  <rdfs:label xml:lang="en">layout</rdfs:label>
+  <rdfs:label xml:lang="en">numpad</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TouchpadResponsivenessAspect">
+  <rdfs:subClassOf rdf:resource="#TouchpadAspect"/>
+  <rdfs:label xml:lang="en">touchpad responsiveness</rdfs:label>
+  <rdfs:label xml:lang="en">responsive touchpad</rdfs:label>
+  <rdfs:label xml:lang="en">cursor</rdfs:label>
+  <rdfs:label xml:lang="en">navigate</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#TouchpadSizeAspect">
+  <rdfs:subClassOf rdf:resource="#TouchpadAspect"/>
+  <rdfs:label xml:lang="en">touchpad size</rdfs:label>
+  <rdfs:label xml:lang="en">trackpad size</rdfs:label>
+  <rdfs:label xml:lang="en">large touchpad</rdfs:label>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#LaptopAspectNode">
+  <rdf:type rdf:resource="#LaptopAspect"/>
+  <hasSubAspect rdf:resource="#HardwareAspectNode"/>
+  <hasSubAspect rdf:resource="#PerformanceAspectNode"/>
+  <hasSubAspect rdf:resource="#SoftwareAspectNode"/>
+  <hasSubAspect rdf:resource="#PortabilityAspectNode"/>
+  <hasSubAspect rdf:resource="#DesignAspectNode"/>
+  <hasSubAspect rdf:resource="#PriceAspectNode"/>
+  <hasSubAspect rdf:resource="#SupportAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">computer</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">use</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptops</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">computers</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">usage</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">notebook</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#HardwareAspectNode">
+  <rdf:type rdf:resource="#HardwareAspect"/>
+  <hasSubAspect rdf:resource="#DisplayAspectNode"/>
+  <hasSubAspect rdf:resource="#BatteryAspectNode"/>
+  <hasSubAspect rdf:resource="#KeyboardAspectNode"/>
+  <hasSubAspect rdf:resource="#TouchpadAspectNode"/>
+  <hasSubAspect rdf:resource="#StorageAspectNode"/>
+  <hasSubAspect rdf:resource="#AudioAspectNode"/>
+  <hasSubAspect rdf:resource="#ConnectivityAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hardware</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">specs</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mother board</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">device</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bios</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">motherboard</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PerformanceAspectNode">
+  <rdf:type rdf:resource="#PerformanceAspect"/>
+  <hasSubAspect rdf:resource="#ProcessingSpeedAspectNode"/>
+  <hasSubAspect rdf:resource="#MemoryAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lag</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">boot up</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">games</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">work</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">speed</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">performance</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">works</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gaming</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fast</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">runs</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">slow</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.3</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SoftwareAspectNode">
+  <rdf:type rdf:resource="#SoftwareAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">windows 7</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">os</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">feature</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">iwork</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">iphoto</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">software</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">features</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">program</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">drivers</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ilife</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">windows</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">system</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">operating system</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">vista</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PortabilityAspectNode">
+  <rdf:type rdf:resource="#PortabilityAspect"/>
+  <hasSubAspect rdf:resource="#WeightAspectNode"/>
+  <hasSubAspect rdf:resource="#DimensionsAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">shipping</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mobility</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">travel</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">portable</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">delivery</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">carry</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">portability</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DesignAspectNode">
+  <rdf:type rdf:resource="#DesignAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">build</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">quality</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">look</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">appearance</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">design</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">build quality</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hinge</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PriceAspectNode">
+  <rdf:type rdf:resource="#PriceAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cheap</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">expensive</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cost</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">price</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">value</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">prices</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#SupportAspectNode">
+  <rdf:type rdf:resource="#SupportAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">warranty</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">support</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">service</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tech support</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">extended warranty</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">customer service</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">warrenty</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DisplayAspectNode">
+  <rdf:type rdf:resource="#DisplayAspect"/>
+  <hasSubAspect rdf:resource="#BrightnessAspectNode"/>
+  <hasSubAspect rdf:resource="#ResolutionAspectNode"/>
+  <hasSubAspect rdf:resource="#ColorAccuracyAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lcd</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">screens</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">display</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">screen</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">screen size</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">monitor</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">graphics</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BatteryAspectNode">
+  <rdf:type rdf:resource="#BatteryAspect"/>
+  <hasSubAspect rdf:resource="#BatteryLifeAspectNode"/>
+  <hasSubAspect rdf:resource="#ChargingSpeedAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">battery</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">charge</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">power supply</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">power</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">charger</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">batteries</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.5</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#KeyboardAspectNode">
+  <rdf:type rdf:resource="#KeyboardAspect"/>
+  <hasSubAspect rdf:resource="#KeyTravelAspectNode"/>
+  <hasSubAspect rdf:resource="#KeyLayoutAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">typing</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">keyboards</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">keys</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">keyboard</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">key</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#TouchpadAspectNode">
+  <rdf:type rdf:resource="#TouchpadAspect"/>
+  <hasSubAspect rdf:resource="#TouchpadResponsivenessAspectNode"/>
+  <hasSubAspect rdf:resource="#TouchpadSizeAspectNode"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mousepad</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">touchpad</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mouse</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mouse pad</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">touch pad</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trackpad</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#StorageAspectNode">
+  <rdf:type rdf:resource="#StorageAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">storage</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hard drive</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">space</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ssd</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hard drives</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">drive</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cd drive</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">disk</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AudioAspectNode">
+  <rdf:type rdf:resource="#AudioAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">speakers</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">audio</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sound</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fan</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">speaker</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ConnectivityAspectNode">
+  <rdf:type rdf:resource="#ConnectivityAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wifi</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ports</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">webcam</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">port</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wireless</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wi-fi</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">usb</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bluetooth</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ProcessingSpeedAspectNode">
+  <rdf:type rdf:resource="#ProcessingSpeedAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">applications</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cpu</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">processor</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">web browsing</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">processing speed</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">programs</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MemoryAspectNode">
+  <rdf:type rdf:resource="#MemoryAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">memory</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ram</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#WeightAspectNode">
+  <rdf:type rdf:resource="#WeightAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lightweight</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">heavy</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">weight</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#DimensionsAspectNode">
+  <rdf:type rdf:resource="#DimensionsAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">size</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thin</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">edges</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thickness</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dimensions</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BrightnessAspectNode">
+  <rdf:type rdf:resource="#BrightnessAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bright</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">glare</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dim</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">brightness</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">backlight</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ResolutionAspectNode">
+  <rdf:type rdf:resource="#ResolutionAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pixel</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pixels</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">retina</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">resolution</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ColorAccuracyAspectNode">
+  <rdf:type rdf:resource="#ColorAccuracyAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">colour</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">colors</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">color</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">colours</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">contrast</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BatteryLifeAspectNode">
+  <rdf:type rdf:resource="#BatteryLifeAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">runtime</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">battery duration</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">battery life</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unplugged time</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.6</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ChargingSpeedAspectNode">
+  <rdf:type rdf:resource="#ChargingSpeedAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fast charge</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">charge time</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">recharge</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">charging speed</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#KeyTravelAspectNode">
+  <rdf:type rdf:resource="#KeyTravelAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">keystroke</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">key travel</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">keystrokes</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#KeyLayoutAspectNode">
+  <rdf:type rdf:resource="#KeyLayoutAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">keyboard layout</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">key layout</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">layout</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">numpad</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#TouchpadResponsivenessAspectNode">
+  <rdf:type rdf:resource="#TouchpadResponsivenessAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">touchpad responsiveness</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">responsive touchpad</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cursor</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">navigate</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#TouchpadSizeAspectNode">
+  <rdf:type rdf:resource="#TouchpadSizeAspect"/>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trackpad size</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">large touchpad</aspectLabel>
+  <aspectLabel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">touchpad size</aspectLabel>
+  <domainName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">laptop</domainName>
+  <sentimentWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</sentimentWeight>
+  <isCritical rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isCritical>
+  <ontologyDepth rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</ontologyDepth>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#criticalChildInfluencesParent">
+  <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+  <swrl:body>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:IndividualPropertyAtom>
+          <swrl:propertyPredicate rdf:resource="#hasSubAspect"/>
+          <swrl:argument1 rdf:resource="urn:swrl#parent"/>
+          <swrl:argument2 rdf:resource="urn:swrl#child"/>
+        </swrl:IndividualPropertyAtom>
+      </rdf:first>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first>
+            <swrl:DatavaluedPropertyAtom>
+              <swrl:propertyPredicate rdf:resource="#isCritical"/>
+              <swrl:argument1 rdf:resource="urn:swrl#child"/>
+              <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl:argument2>
+            </swrl:DatavaluedPropertyAtom>
+          </rdf:first>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </swrl:body>
+  <swrl:head>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:IndividualPropertyAtom>
+          <swrl:propertyPredicate rdf:resource="#influences"/>
+          <swrl:argument1 rdf:resource="urn:swrl#child"/>
+          <swrl:argument2 rdf:resource="urn:swrl#parent"/>
+        </swrl:IndividualPropertyAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </rdf:Description>
+  </swrl:head>
+</owl:NamedIndividual>
+
+<swrl:Variable rdf:about="urn:swrl#parent"/>
+
+<swrl:Variable rdf:about="urn:swrl#child"/>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#HardwareAspect"/>
+    <rdf:Description rdf:about="#PerformanceAspect"/>
+    <rdf:Description rdf:about="#SoftwareAspect"/>
+    <rdf:Description rdf:about="#PortabilityAspect"/>
+    <rdf:Description rdf:about="#DesignAspect"/>
+    <rdf:Description rdf:about="#PriceAspect"/>
+    <rdf:Description rdf:about="#SupportAspect"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

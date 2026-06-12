@@ -8,7 +8,7 @@ import yaml
 
 
 class Config(dict):
-    """Dictionary with recursive attribute access."""
+    """Dictionary with recursive attribute access and serialization."""
 
     def __getattr__(self, key: str) -> Any:
         try:
@@ -16,8 +16,7 @@ class Config(dict):
         except KeyError as exc:
             raise AttributeError(key) from exc
 
-    def __setattr__(self, key: str, value: Any) -> None:
-        self[key] = value
+    __setattr__ = dict.__setitem__
 
     @classmethod
     def wrap(cls, value: Any) -> Any:
@@ -53,12 +52,10 @@ def load_config(
     overrides: Mapping[str, Any] | None = None,
 ) -> Config:
     default_path = Path(__file__).with_name("default_config.yaml")
-    with default_path.open("r", encoding="utf-8") as handle:
-        data = yaml.safe_load(handle) or {}
-
+    data = yaml.safe_load(default_path.read_text(encoding="utf-8")) or {}
     if path is not None and Path(path).resolve() != default_path.resolve():
-        with Path(path).open("r", encoding="utf-8") as handle:
-            data = _deep_merge(data, yaml.safe_load(handle) or {})
+        custom = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+        data = _deep_merge(data, custom)
     if overrides:
         data = _deep_merge(data, overrides)
     return Config.wrap(data)
@@ -70,8 +67,8 @@ def apply_dotted_overrides(config: Config, values: list[str]) -> Config:
         if "=" not in expression:
             raise ValueError(f"Override must have KEY=VALUE form: {expression}")
         dotted_key, raw_value = expression.split("=", 1)
-        keys = dotted_key.split(".")
         cursor = data
+        keys = dotted_key.split(".")
         for key in keys[:-1]:
             cursor = cursor.setdefault(key, {})
         cursor[keys[-1]] = yaml.safe_load(raw_value)

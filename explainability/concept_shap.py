@@ -6,24 +6,20 @@ import torch
 
 
 class ConceptAttribution:
-    """Groups token attribution by ontology concept and supports perturbation SHAP."""
+    """Concept aggregation and perturbation attribution (SHAP-style approximation)."""
 
     def __init__(self, model, ontology):
         self.model = model
         self.ontology = ontology
 
-    def aggregate(
-        self,
-        token_scores: torch.Tensor,
-        token_concept_ids: torch.Tensor,
-    ) -> list[dict[str, float]]:
-        results: list[dict[str, float]] = []
+    def aggregate(self, token_scores, token_concept_ids):
+        results = []
         for row in range(token_scores.size(0)):
-            grouped: dict[str, list[float]] = defaultdict(list)
+            grouped = defaultdict(list)
             for position, concept_id in enumerate(token_concept_ids[row].tolist()):
                 if concept_id >= 0:
                     grouped[self.ontology.names[concept_id]].append(
-                        float(token_scores[row, position].item())
+                        float(token_scores[row, position])
                     )
             results.append(
                 {
@@ -34,50 +30,27 @@ class ConceptAttribution:
         return results
 
     @torch.no_grad()
-    def perturbation_values(self, batch: dict) -> list[dict[str, float]]:
-        self.model.eval()
-        original = self.model(
-            input_ids=batch["input_ids"],
-            attention_mask=batch["attention_mask"],
-            aspect_mask=batch["aspect_mask"],
-            concept_id=batch["concept_id"],
-            main_concept_id=batch.get("main_concept_id"),
-            dependency=batch.get("dependency"),
-        )["logits"]
-        target = original.argmax(dim=-1)
-        original_score = original.gather(1, target.unsqueeze(1)).squeeze(1)
-        results: list[dict[str, float]] = []
-
-        for row in range(batch["input_ids"].size(0)):
-            values: dict[str, float] = {}
-            concept_ids = set(
-                value
-                for value in batch["token_concept_ids"][row].tolist()
-                if value >= 0
-            )
-            for concept_id in concept_ids:
-                perturbed_ids = batch["input_ids"][row : row + 1].clone()
-                positions = batch["token_concept_ids"][row : row + 1] == concept_id
-                perturbed_ids[positions] = 0
-                output = self.model(
-                    input_ids=perturbed_ids,
-                    attention_mask=batch["attention_mask"][row : row + 1],
-                    aspect_mask=batch["aspect_mask"][row : row + 1],
-                    concept_id=batch["concept_id"][row : row + 1],
-                    main_concept_id=(
-                        batch["main_concept_id"][row : row + 1]
-                        if "main_concept_id" in batch
-                        else None
-                    ),
-                    dependency=(
-                        batch["dependency"][row : row + 1]
-                        if "dependency" in batch
-                        else None
-                    ),
-                )["logits"]
-                score = output[0, target[row]]
+    def perturbation_values(self, batch):
+        original = self.model(**batch)["logits"]
+        target = original.argmax(-1)
+        results = []
+        for row in range(len(target)):
+            values = {}
+            for concept_id in {
+                value for value in batch["token_concept_ids"][row].tolist() if value >= 0
+            }:
+                perturbed = {
+                    key: value[row : row + 1]
+                    if isinstance(value, torch.Tensor)
+                    else value
+                    for key, value in batch.items()
+                }
+                perturbed["input_ids"] = perturbed["input_ids"].clone()
+                mask = batch["token_concept_ids"][row : row + 1] == concept_id
+                perturbed["input_ids"][mask] = 0
+                score = self.model(**perturbed)["logits"][0, target[row]]
                 values[self.ontology.names[concept_id]] = float(
-                    (original_score[row] - score).item()
+                    original[row, target[row]] - score
                 )
             results.append(values)
         return results

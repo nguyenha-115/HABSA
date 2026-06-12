@@ -8,51 +8,52 @@ from torch.nn import functional as F
 
 
 class TextEncoder(nn.Module):
-    """PLM-compatible encoder with an offline BiGRU implementation."""
+    """XLM-R encoder with an optional lightweight offline BiGRU backend."""
 
     def __init__(
         self,
         vocab_size: int,
         embedding_dim: int,
         hidden_dim: int,
-        dropout: float = 0.2,
-        backend: str = "bigru",
-        pretrained_model: str = "xlm-roberta-base",
-        local_files_only: bool = True,
+        dropout: float,
+        backend: str,
+        pretrained_model: str,
+        local_files_only: bool,
     ):
         super().__init__()
         self.backend = backend
-        self.output_dim = hidden_dim
         if backend == "transformer":
-            try:
-                from transformers import AutoModel
+            from transformers import AutoModel
 
+            try:
                 self.transformer = AutoModel.from_pretrained(
                     pretrained_model, local_files_only=local_files_only
                 )
             except Exception as exc:
                 raise RuntimeError(
-                    "Transformer backend requested but the model is unavailable. "
-                    "Download it first or use model.text_backend=bigru."
+                    f"Cannot load {pretrained_model!r}. Cache/download it or use "
+                    "model.text_backend=bigru for an offline run."
                 ) from exc
             source_dim = int(self.transformer.config.hidden_size)
-            self.projection = (
-                nn.Identity() if source_dim == hidden_dim else nn.Linear(source_dim, hidden_dim)
-            )
             self.embedding = self.transformer.get_input_embeddings()
             self.rnn = None
-        else:
+        elif backend == "bigru":
+            self.transformer = None
             self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
             self.rnn = nn.GRU(
                 embedding_dim,
                 hidden_dim // 2,
-                num_layers=1,
                 batch_first=True,
                 bidirectional=True,
             )
-            self.projection = nn.Identity()
+            source_dim = hidden_dim
+        else:
+            raise ValueError("text_backend must be 'transformer' or 'bigru'")
+        self.projection = (
+            nn.Identity() if source_dim == hidden_dim else nn.Linear(source_dim, hidden_dim)
+        )
         self.dropout = nn.Dropout(dropout)
-        self.layer_norm = nn.LayerNorm(hidden_dim)
+        self.norm = nn.LayerNorm(hidden_dim)
 
     def embed(self, input_ids: torch.Tensor) -> torch.Tensor:
         return self.embedding(input_ids)
@@ -61,31 +62,34 @@ class TextEncoder(nn.Module):
         self, embeddings: torch.Tensor, attention_mask: torch.Tensor
     ) -> torch.Tensor:
         if self.backend == "transformer":
-            outputs = self.transformer(
-                inputs_embeds=embeddings, attention_mask=attention_mask.long()
+            states = self.transformer(
+                inputs_embeds=embeddings,
+                attention_mask=attention_mask.long(),
             ).last_hidden_state
         else:
-            lengths = attention_mask.sum(dim=1).clamp_min(1).cpu()
+            lengths = attention_mask.sum(1).clamp_min(1).cpu()
             packed = nn.utils.rnn.pack_padded_sequence(
                 embeddings, lengths, batch_first=True, enforce_sorted=False
             )
-            packed_output, _ = self.rnn(packed)
-            outputs, _ = nn.utils.rnn.pad_packed_sequence(
-                packed_output, batch_first=True, total_length=embeddings.size(1)
+            packed_states, _ = self.rnn(packed)
+            states, _ = nn.utils.rnn.pad_packed_sequence(
+                packed_states,
+                batch_first=True,
+                total_length=embeddings.size(1),
             )
-        return self.layer_norm(self.projection(self.dropout(outputs)))
+        return self.norm(self.projection(self.dropout(states)))
 
     def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         if self.backend == "transformer":
-            outputs = self.transformer(
+            states = self.transformer(
                 input_ids=input_ids, attention_mask=attention_mask.long()
             ).last_hidden_state
-            return self.layer_norm(self.projection(self.dropout(outputs)))
+            return self.norm(self.projection(self.dropout(states)))
         return self.encode_embeddings(self.embed(input_ids), attention_mask)
 
 
 class DependencyGraphEncoder(nn.Module):
-    def __init__(self, hidden_dim: int, dropout: float = 0.2):
+    def __init__(self, hidden_dim: int, dropout: float):
         super().__init__()
         self.message = nn.Linear(hidden_dim, hidden_dim)
         self.gate = nn.Linear(hidden_dim * 2, hidden_dim)
@@ -125,18 +129,17 @@ class TransEEmbedding(nn.Module):
             self.entity.weight.copy_(F.normalize(self.entity.weight, dim=-1))
 
 
-def sinusoidal_depth_encoding(
-    depths: torch.Tensor, dimension: int, dtype: torch.dtype = torch.float
-) -> torch.Tensor:
-    positions = depths.to(dtype).unsqueeze(1)
+def sinusoidal_depth_encoding(depths: torch.Tensor, dimension: int) -> torch.Tensor:
+    positions = depths.float().unsqueeze(1)
     divisor = torch.exp(
-        torch.arange(0, dimension, 2, device=depths.device, dtype=dtype)
+        torch.arange(0, dimension, 2, device=depths.device).float()
         * (-math.log(10000.0) / dimension)
     )
-    encoding = torch.zeros((depths.numel(), dimension), device=depths.device, dtype=dtype)
+    encoding = torch.zeros((len(depths), dimension), device=depths.device)
     encoding[:, 0::2] = torch.sin(positions * divisor)
-    if dimension > 1:
-        encoding[:, 1::2] = torch.cos(positions * divisor[: encoding[:, 1::2].shape[1]])
+    encoding[:, 1::2] = torch.cos(
+        positions * divisor[: encoding[:, 1::2].shape[1]]
+    )
     return encoding
 
 
@@ -149,5 +152,5 @@ class HierarchyEncoder(nn.Module):
 
     def forward(self, depths: torch.Tensor) -> torch.Tensor:
         entities = self.transe.entity.weight
-        positions = sinusoidal_depth_encoding(depths, entities.size(-1), entities.dtype)
+        positions = sinusoidal_depth_encoding(depths, entities.size(-1)).to(entities.dtype)
         return self.norm(self.projection(torch.cat([entities, positions], dim=-1)))

@@ -1,105 +1,167 @@
-label	concept	domain	depth
-appearance	DesignAspect	laptop	1
-applications	ProcessingSpeedAspect	laptop	2
-audio	AudioAspect	laptop	2
-backlight	BrightnessAspect	laptop	3
-battery	BatteryAspect	laptop	2
-battery duration	BatteryLifeAspect	laptop	3
-battery life	BatteryLifeAspect	laptop	3
-bluetooth	ConnectivityAspect	laptop	2
-bright	BrightnessAspect	laptop	3
-brightness	BrightnessAspect	laptop	3
-build	HardwareAspect	laptop	1
-build quality	DesignAspect	laptop	1
-charge	BatteryAspect	laptop	2
-charger	BatteryAspect	laptop	2
-charging speed	ChargingSpeedAspect	laptop	3
-cheap	PriceAspect	laptop	1
-color	ColorAccuracyAspect	laptop	3
-colour	ColorAccuracyAspect	laptop	3
-computer	LaptopAspect	laptop	0
-contrast	ColorAccuracyAspect	laptop	3
-cost	PriceAspect	laptop	1
-cpu	ProcessingSpeedAspect	laptop	2
-cursor	TouchpadResponsivenessAspect	laptop	3
-customer service	SupportAspect	laptop	1
-design	DesignAspect	laptop	1
-device	HardwareAspect	laptop	1
-dim	BrightnessAspect	laptop	3
-dimensions	DimensionsAspect	laptop	2
-disk	StorageAspect	laptop	2
-display	DisplayAspect	laptop	2
-drive	StorageAspect	laptop	2
-expensive	PriceAspect	laptop	1
-fast	PerformanceAspect	laptop	1
-fast charge	ChargingSpeedAspect	laptop	3
-graphics	DisplayAspect	laptop	2
-hard drive	StorageAspect	laptop	2
-hardware	HardwareAspect	laptop	1
-heavy	WeightAspect	laptop	2
-key layout	KeyLayoutAspect	laptop	3
-key travel	KeyTravelAspect	laptop	3
-keyboard	KeyboardAspect	laptop	2
-keys	KeyboardAspect	laptop	2
-keystroke	KeyTravelAspect	laptop	3
-lag	PerformanceAspect	laptop	1
-laptop	LaptopAspect	laptop	0
-large touchpad	TouchpadSizeAspect	laptop	3
-layout	KeyLayoutAspect	laptop	3
-lcd	DisplayAspect	laptop	2
-lightweight	WeightAspect	laptop	2
-look	DesignAspect	laptop	1
-memory	MemoryAspect	laptop	2
-mobility	PortabilityAspect	laptop	1
-monitor	DisplayAspect	laptop	2
-mouse pad	TouchpadAspect	laptop	2
-notebook	LaptopAspect	laptop	0
-numpad	KeyLayoutAspect	laptop	3
-operating system	SoftwareAspect	laptop	1
-performance	PerformanceAspect	laptop	1
-pixels	ResolutionAspect	laptop	3
-port	ConnectivityAspect	laptop	2
-portability	PortabilityAspect	laptop	1
-portable	PortabilityAspect	laptop	1
-ports	ConnectivityAspect	laptop	2
-power	BatteryAspect	laptop	2
-price	PriceAspect	laptop	1
-processing speed	ProcessingSpeedAspect	laptop	2
-processor	ProcessingSpeedAspect	laptop	2
-program	SoftwareAspect	laptop	1
-programs	ProcessingSpeedAspect	laptop	2
-quality	DesignAspect	laptop	1
-ram	MemoryAspect	laptop	2
-recharge	ChargingSpeedAspect	laptop	3
-resolution	ResolutionAspect	laptop	3
-responsive touchpad	TouchpadResponsivenessAspect	laptop	3
-retina	ResolutionAspect	laptop	3
-runs	PerformanceAspect	laptop	1
-runtime	BatteryLifeAspect	laptop	3
-screen	DisplayAspect	laptop	2
-service	SupportAspect	laptop	1
-size	DimensionsAspect	laptop	2
-slow	PerformanceAspect	laptop	1
-software	SoftwareAspect	laptop	1
-sound	AudioAspect	laptop	2
-speaker	AudioAspect	laptop	2
-speakers	AudioAspect	laptop	2
-speed	PerformanceAspect	laptop	1
-ssd	StorageAspect	laptop	2
-storage	StorageAspect	laptop	2
-support	SupportAspect	laptop	1
-thickness	DimensionsAspect	laptop	2
-thin	DimensionsAspect	laptop	2
-touchpad	TouchpadAspect	laptop	2
-touchpad responsiveness	TouchpadResponsivenessAspect	laptop	3
-touchpad size	TouchpadSizeAspect	laptop	3
-trackpad	TouchpadAspect	laptop	2
-travel	PortabilityAspect	laptop	1
-typing	KeyboardAspect	laptop	2
-usb	ConnectivityAspect	laptop	2
-value	PriceAspect	laptop	1
-warranty	SupportAspect	laptop	1
-weight	WeightAspect	laptop	2
-wifi	ConnectivityAspect	laptop	2
-windows	SoftwareAspect	laptop	1
-wireless	ConnectivityAspect	laptop	2
+label	language	concept	domain	depth
+laptop	en	LaptopAspect	laptop	0
+laptops	en	LaptopAspect	laptop	0
+computer	en	LaptopAspect	laptop	0
+computers	en	LaptopAspect	laptop	0
+notebook	en	LaptopAspect	laptop	0
+use	en	LaptopAspect	laptop	0
+usage	en	LaptopAspect	laptop	0
+máy tính xách tay	vi	LaptopAspect	laptop	0
+Laptop	de	LaptopAspect	laptop	0
+Notebook	de	LaptopAspect	laptop	0
+ordinateur portable	fr	LaptopAspect	laptop	0
+hardware	en	HardwareAspect	laptop	1
+device	en	HardwareAspect	laptop	1
+specs	en	HardwareAspect	laptop	1
+motherboard	en	HardwareAspect	laptop	1
+mother board	en	HardwareAspect	laptop	1
+bios	en	HardwareAspect	laptop	1
+screen	en	DisplayAspect	laptop	2
+screens	en	DisplayAspect	laptop	2
+display	en	DisplayAspect	laptop	2
+monitor	en	DisplayAspect	laptop	2
+lcd	en	DisplayAspect	laptop	2
+graphics	en	DisplayAspect	laptop	2
+screen size	en	DisplayAspect	laptop	2
+brightness	en	BrightnessAspect	laptop	3
+bright	en	BrightnessAspect	laptop	3
+dim	en	BrightnessAspect	laptop	3
+backlight	en	BrightnessAspect	laptop	3
+glare	en	BrightnessAspect	laptop	3
+resolution	en	ResolutionAspect	laptop	3
+pixel	en	ResolutionAspect	laptop	3
+pixels	en	ResolutionAspect	laptop	3
+retina	en	ResolutionAspect	laptop	3
+color	en	ColorAccuracyAspect	laptop	3
+colors	en	ColorAccuracyAspect	laptop	3
+colour	en	ColorAccuracyAspect	laptop	3
+colours	en	ColorAccuracyAspect	laptop	3
+contrast	en	ColorAccuracyAspect	laptop	3
+battery	en	BatteryAspect	laptop	2
+batteries	en	BatteryAspect	laptop	2
+power	en	BatteryAspect	laptop	2
+charge	en	BatteryAspect	laptop	2
+charger	en	BatteryAspect	laptop	2
+power supply	en	BatteryAspect	laptop	2
+battery life	en	BatteryLifeAspect	laptop	3
+battery duration	en	BatteryLifeAspect	laptop	3
+runtime	en	BatteryLifeAspect	laptop	3
+unplugged time	en	BatteryLifeAspect	laptop	3
+charging speed	en	ChargingSpeedAspect	laptop	3
+charge time	en	ChargingSpeedAspect	laptop	3
+fast charge	en	ChargingSpeedAspect	laptop	3
+recharge	en	ChargingSpeedAspect	laptop	3
+keyboard	en	KeyboardAspect	laptop	2
+keyboards	en	KeyboardAspect	laptop	2
+key	en	KeyboardAspect	laptop	2
+keys	en	KeyboardAspect	laptop	2
+typing	en	KeyboardAspect	laptop	2
+key travel	en	KeyTravelAspect	laptop	3
+keystroke	en	KeyTravelAspect	laptop	3
+keystrokes	en	KeyTravelAspect	laptop	3
+key layout	en	KeyLayoutAspect	laptop	3
+keyboard layout	en	KeyLayoutAspect	laptop	3
+layout	en	KeyLayoutAspect	laptop	3
+numpad	en	KeyLayoutAspect	laptop	3
+touchpad	en	TouchpadAspect	laptop	2
+touch pad	en	TouchpadAspect	laptop	2
+trackpad	en	TouchpadAspect	laptop	2
+mousepad	en	TouchpadAspect	laptop	2
+mouse pad	en	TouchpadAspect	laptop	2
+mouse	en	TouchpadAspect	laptop	2
+touchpad responsiveness	en	TouchpadResponsivenessAspect	laptop	3
+responsive touchpad	en	TouchpadResponsivenessAspect	laptop	3
+cursor	en	TouchpadResponsivenessAspect	laptop	3
+navigate	en	TouchpadResponsivenessAspect	laptop	3
+touchpad size	en	TouchpadSizeAspect	laptop	3
+trackpad size	en	TouchpadSizeAspect	laptop	3
+large touchpad	en	TouchpadSizeAspect	laptop	3
+storage	en	StorageAspect	laptop	2
+hard drive	en	StorageAspect	laptop	2
+hard drives	en	StorageAspect	laptop	2
+disk	en	StorageAspect	laptop	2
+ssd	en	StorageAspect	laptop	2
+drive	en	StorageAspect	laptop	2
+cd drive	en	StorageAspect	laptop	2
+space	en	StorageAspect	laptop	2
+audio	en	AudioAspect	laptop	2
+sound	en	AudioAspect	laptop	2
+speaker	en	AudioAspect	laptop	2
+speakers	en	AudioAspect	laptop	2
+fan	en	AudioAspect	laptop	2
+wifi	en	ConnectivityAspect	laptop	2
+wi-fi	en	ConnectivityAspect	laptop	2
+wireless	en	ConnectivityAspect	laptop	2
+bluetooth	en	ConnectivityAspect	laptop	2
+port	en	ConnectivityAspect	laptop	2
+ports	en	ConnectivityAspect	laptop	2
+usb	en	ConnectivityAspect	laptop	2
+webcam	en	ConnectivityAspect	laptop	2
+performance	en	PerformanceAspect	laptop	1
+speed	en	PerformanceAspect	laptop	1
+fast	en	PerformanceAspect	laptop	1
+slow	en	PerformanceAspect	laptop	1
+lag	en	PerformanceAspect	laptop	1
+runs	en	PerformanceAspect	laptop	1
+works	en	PerformanceAspect	laptop	1
+work	en	PerformanceAspect	laptop	1
+gaming	en	PerformanceAspect	laptop	1
+games	en	PerformanceAspect	laptop	1
+boot up	en	PerformanceAspect	laptop	1
+processor	en	ProcessingSpeedAspect	laptop	2
+cpu	en	ProcessingSpeedAspect	laptop	2
+processing speed	en	ProcessingSpeedAspect	laptop	2
+programs	en	ProcessingSpeedAspect	laptop	2
+applications	en	ProcessingSpeedAspect	laptop	2
+web browsing	en	ProcessingSpeedAspect	laptop	2
+memory	en	MemoryAspect	laptop	2
+ram	en	MemoryAspect	laptop	2
+software	en	SoftwareAspect	laptop	1
+windows	en	SoftwareAspect	laptop	1
+windows 7	en	SoftwareAspect	laptop	1
+vista	en	SoftwareAspect	laptop	1
+operating system	en	SoftwareAspect	laptop	1
+system	en	SoftwareAspect	laptop	1
+os	en	SoftwareAspect	laptop	1
+program	en	SoftwareAspect	laptop	1
+drivers	en	SoftwareAspect	laptop	1
+features	en	SoftwareAspect	laptop	1
+feature	en	SoftwareAspect	laptop	1
+iwork	en	SoftwareAspect	laptop	1
+ilife	en	SoftwareAspect	laptop	1
+iphoto	en	SoftwareAspect	laptop	1
+portability	en	PortabilityAspect	laptop	1
+portable	en	PortabilityAspect	laptop	1
+travel	en	PortabilityAspect	laptop	1
+mobility	en	PortabilityAspect	laptop	1
+carry	en	PortabilityAspect	laptop	1
+shipping	en	PortabilityAspect	laptop	1
+delivery	en	PortabilityAspect	laptop	1
+weight	en	WeightAspect	laptop	2
+lightweight	en	WeightAspect	laptop	2
+heavy	en	WeightAspect	laptop	2
+size	en	DimensionsAspect	laptop	2
+dimensions	en	DimensionsAspect	laptop	2
+thin	en	DimensionsAspect	laptop	2
+thickness	en	DimensionsAspect	laptop	2
+edges	en	DimensionsAspect	laptop	2
+design	en	DesignAspect	laptop	1
+look	en	DesignAspect	laptop	1
+appearance	en	DesignAspect	laptop	1
+quality	en	DesignAspect	laptop	1
+build	en	DesignAspect	laptop	1
+build quality	en	DesignAspect	laptop	1
+hinge	en	DesignAspect	laptop	1
+price	en	PriceAspect	laptop	1
+prices	en	PriceAspect	laptop	1
+cost	en	PriceAspect	laptop	1
+value	en	PriceAspect	laptop	1
+expensive	en	PriceAspect	laptop	1
+cheap	en	PriceAspect	laptop	1
+support	en	SupportAspect	laptop	1
+tech support	en	SupportAspect	laptop	1
+warranty	en	SupportAspect	laptop	1
+warrenty	en	SupportAspect	laptop	1
+extended warranty	en	SupportAspect	laptop	1
+service	en	SupportAspect	laptop	1
+customer service	en	SupportAspect	laptop	1

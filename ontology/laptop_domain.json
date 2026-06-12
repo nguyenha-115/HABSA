@@ -1,17 +1,35 @@
 {
+  "schema_version": 1,
   "domain": "laptop",
+  "base_iri": "https://example.org/oke-habsa/laptop.owl#",
   "concepts": [
     {
       "name": "LaptopAspect",
       "parent": null,
       "labels": [
         "laptop",
+        "laptops",
         "computer",
-        "notebook"
+        "computers",
+        "notebook",
+        "use",
+        "usage"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {
+        "vi": [
+          "máy tính xách tay"
+        ],
+        "de": [
+          "Laptop",
+          "Notebook"
+        ],
+        "fr": [
+          "ordinateur portable"
+        ]
+      },
       "relations": {},
       "depth": 0
     },
@@ -20,12 +38,16 @@
       "parent": "LaptopAspect",
       "labels": [
         "hardware",
-        "build",
-        "device"
+        "device",
+        "specs",
+        "motherboard",
+        "mother board",
+        "bios"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     },
@@ -34,14 +56,17 @@
       "parent": "HardwareAspect",
       "labels": [
         "screen",
+        "screens",
         "display",
         "monitor",
         "lcd",
-        "graphics"
+        "graphics",
+        "screen size"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -52,11 +77,13 @@
         "brightness",
         "bright",
         "dim",
-        "backlight"
+        "backlight",
+        "glare"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -65,12 +92,14 @@
       "parent": "DisplayAspect",
       "labels": [
         "resolution",
+        "pixel",
         "pixels",
         "retina"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -79,12 +108,15 @@
       "parent": "DisplayAspect",
       "labels": [
         "color",
+        "colors",
         "colour",
+        "colours",
         "contrast"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -93,14 +125,16 @@
       "parent": "HardwareAspect",
       "labels": [
         "battery",
+        "batteries",
         "power",
         "charge",
         "charger",
-        "battery life"
+        "power supply"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.5,
       "is_critical": true,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -109,12 +143,14 @@
       "parent": "BatteryAspect",
       "labels": [
         "battery life",
+        "battery duration",
         "runtime",
-        "battery duration"
+        "unplugged time"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.6,
       "is_critical": true,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -123,12 +159,14 @@
       "parent": "BatteryAspect",
       "labels": [
         "charging speed",
+        "charge time",
         "fast charge",
         "recharge"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -137,12 +175,15 @@
       "parent": "HardwareAspect",
       "labels": [
         "keyboard",
+        "keyboards",
+        "key",
         "keys",
         "typing"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -151,11 +192,13 @@
       "parent": "KeyboardAspect",
       "labels": [
         "key travel",
-        "keystroke"
+        "keystroke",
+        "keystrokes"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -164,12 +207,14 @@
       "parent": "KeyboardAspect",
       "labels": [
         "key layout",
+        "keyboard layout",
         "layout",
         "numpad"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -178,12 +223,16 @@
       "parent": "HardwareAspect",
       "labels": [
         "touchpad",
+        "touch pad",
         "trackpad",
-        "mouse pad"
+        "mousepad",
+        "mouse pad",
+        "mouse"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -193,11 +242,13 @@
       "labels": [
         "touchpad responsiveness",
         "responsive touchpad",
-        "cursor"
+        "cursor",
+        "navigate"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -206,11 +257,13 @@
       "parent": "TouchpadAspect",
       "labels": [
         "touchpad size",
+        "trackpad size",
         "large touchpad"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 3
     },
@@ -220,13 +273,17 @@
       "labels": [
         "storage",
         "hard drive",
+        "hard drives",
         "disk",
         "ssd",
-        "drive"
+        "drive",
+        "cd drive",
+        "space"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -237,11 +294,13 @@
         "audio",
         "sound",
         "speaker",
-        "speakers"
+        "speakers",
+        "fan"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -250,15 +309,18 @@
       "parent": "HardwareAspect",
       "labels": [
         "wifi",
+        "wi-fi",
         "wireless",
         "bluetooth",
         "port",
         "ports",
-        "usb"
+        "usb",
+        "webcam"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -271,11 +333,17 @@
         "fast",
         "slow",
         "lag",
-        "runs"
+        "runs",
+        "works",
+        "work",
+        "gaming",
+        "games",
+        "boot up"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.3,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     },
@@ -287,11 +355,13 @@
         "cpu",
         "processing speed",
         "programs",
-        "applications"
+        "applications",
+        "web browsing"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -305,6 +375,7 @@
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -314,12 +385,23 @@
       "labels": [
         "software",
         "windows",
+        "windows 7",
+        "vista",
         "operating system",
-        "program"
+        "system",
+        "os",
+        "program",
+        "drivers",
+        "features",
+        "feature",
+        "iwork",
+        "ilife",
+        "iphoto"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     },
@@ -330,11 +412,15 @@
         "portability",
         "portable",
         "travel",
-        "mobility"
+        "mobility",
+        "carry",
+        "shipping",
+        "delivery"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     },
@@ -349,6 +435,7 @@
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -359,11 +446,13 @@
         "size",
         "dimensions",
         "thin",
-        "thickness"
+        "thickness",
+        "edges"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 2
     },
@@ -375,11 +464,14 @@
         "look",
         "appearance",
         "quality",
-        "build quality"
+        "build",
+        "build quality",
+        "hinge"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     },
@@ -388,6 +480,7 @@
       "parent": "LaptopAspect",
       "labels": [
         "price",
+        "prices",
         "cost",
         "value",
         "expensive",
@@ -396,6 +489,7 @@
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     },
@@ -404,13 +498,17 @@
       "parent": "LaptopAspect",
       "labels": [
         "support",
+        "tech support",
         "warranty",
+        "warrenty",
+        "extended warranty",
         "service",
         "customer service"
       ],
       "domain": "laptop",
       "sentiment_weight": 1.0,
       "is_critical": false,
+      "multilingual_labels": {},
       "relations": {},
       "depth": 1
     }
@@ -554,88 +652,141 @@
   ],
   "lexicon": {
     "laptop": "LaptopAspect",
+    "laptops": "LaptopAspect",
     "computer": "LaptopAspect",
+    "computers": "LaptopAspect",
     "notebook": "LaptopAspect",
+    "use": "LaptopAspect",
+    "usage": "LaptopAspect",
+    "máy tính xách tay": "LaptopAspect",
+    "ordinateur portable": "LaptopAspect",
     "hardware": "HardwareAspect",
-    "build": "HardwareAspect",
     "device": "HardwareAspect",
+    "specs": "HardwareAspect",
+    "motherboard": "HardwareAspect",
+    "mother board": "HardwareAspect",
+    "bios": "HardwareAspect",
     "screen": "DisplayAspect",
+    "screens": "DisplayAspect",
     "display": "DisplayAspect",
     "monitor": "DisplayAspect",
     "lcd": "DisplayAspect",
     "graphics": "DisplayAspect",
+    "screen size": "DisplayAspect",
     "brightness": "BrightnessAspect",
     "bright": "BrightnessAspect",
     "dim": "BrightnessAspect",
     "backlight": "BrightnessAspect",
+    "glare": "BrightnessAspect",
     "resolution": "ResolutionAspect",
+    "pixel": "ResolutionAspect",
     "pixels": "ResolutionAspect",
     "retina": "ResolutionAspect",
     "color": "ColorAccuracyAspect",
+    "colors": "ColorAccuracyAspect",
     "colour": "ColorAccuracyAspect",
+    "colours": "ColorAccuracyAspect",
     "contrast": "ColorAccuracyAspect",
     "battery": "BatteryAspect",
+    "batteries": "BatteryAspect",
     "power": "BatteryAspect",
     "charge": "BatteryAspect",
     "charger": "BatteryAspect",
+    "power supply": "BatteryAspect",
     "battery life": "BatteryLifeAspect",
-    "runtime": "BatteryLifeAspect",
     "battery duration": "BatteryLifeAspect",
+    "runtime": "BatteryLifeAspect",
+    "unplugged time": "BatteryLifeAspect",
     "charging speed": "ChargingSpeedAspect",
+    "charge time": "ChargingSpeedAspect",
     "fast charge": "ChargingSpeedAspect",
     "recharge": "ChargingSpeedAspect",
     "keyboard": "KeyboardAspect",
+    "keyboards": "KeyboardAspect",
+    "key": "KeyboardAspect",
     "keys": "KeyboardAspect",
     "typing": "KeyboardAspect",
     "key travel": "KeyTravelAspect",
     "keystroke": "KeyTravelAspect",
+    "keystrokes": "KeyTravelAspect",
     "key layout": "KeyLayoutAspect",
+    "keyboard layout": "KeyLayoutAspect",
     "layout": "KeyLayoutAspect",
     "numpad": "KeyLayoutAspect",
     "touchpad": "TouchpadAspect",
+    "touch pad": "TouchpadAspect",
     "trackpad": "TouchpadAspect",
+    "mousepad": "TouchpadAspect",
     "mouse pad": "TouchpadAspect",
+    "mouse": "TouchpadAspect",
     "touchpad responsiveness": "TouchpadResponsivenessAspect",
     "responsive touchpad": "TouchpadResponsivenessAspect",
     "cursor": "TouchpadResponsivenessAspect",
+    "navigate": "TouchpadResponsivenessAspect",
     "touchpad size": "TouchpadSizeAspect",
+    "trackpad size": "TouchpadSizeAspect",
     "large touchpad": "TouchpadSizeAspect",
     "storage": "StorageAspect",
     "hard drive": "StorageAspect",
+    "hard drives": "StorageAspect",
     "disk": "StorageAspect",
     "ssd": "StorageAspect",
     "drive": "StorageAspect",
+    "cd drive": "StorageAspect",
+    "space": "StorageAspect",
     "audio": "AudioAspect",
     "sound": "AudioAspect",
     "speaker": "AudioAspect",
     "speakers": "AudioAspect",
+    "fan": "AudioAspect",
     "wifi": "ConnectivityAspect",
+    "wi-fi": "ConnectivityAspect",
     "wireless": "ConnectivityAspect",
     "bluetooth": "ConnectivityAspect",
     "port": "ConnectivityAspect",
     "ports": "ConnectivityAspect",
     "usb": "ConnectivityAspect",
+    "webcam": "ConnectivityAspect",
     "performance": "PerformanceAspect",
     "speed": "PerformanceAspect",
     "fast": "PerformanceAspect",
     "slow": "PerformanceAspect",
     "lag": "PerformanceAspect",
     "runs": "PerformanceAspect",
+    "works": "PerformanceAspect",
+    "work": "PerformanceAspect",
+    "gaming": "PerformanceAspect",
+    "games": "PerformanceAspect",
+    "boot up": "PerformanceAspect",
     "processor": "ProcessingSpeedAspect",
     "cpu": "ProcessingSpeedAspect",
     "processing speed": "ProcessingSpeedAspect",
     "programs": "ProcessingSpeedAspect",
     "applications": "ProcessingSpeedAspect",
+    "web browsing": "ProcessingSpeedAspect",
     "memory": "MemoryAspect",
     "ram": "MemoryAspect",
     "software": "SoftwareAspect",
     "windows": "SoftwareAspect",
+    "windows 7": "SoftwareAspect",
+    "vista": "SoftwareAspect",
     "operating system": "SoftwareAspect",
+    "system": "SoftwareAspect",
+    "os": "SoftwareAspect",
     "program": "SoftwareAspect",
+    "drivers": "SoftwareAspect",
+    "features": "SoftwareAspect",
+    "feature": "SoftwareAspect",
+    "iwork": "SoftwareAspect",
+    "ilife": "SoftwareAspect",
+    "iphoto": "SoftwareAspect",
     "portability": "PortabilityAspect",
     "portable": "PortabilityAspect",
     "travel": "PortabilityAspect",
     "mobility": "PortabilityAspect",
+    "carry": "PortabilityAspect",
+    "shipping": "PortabilityAspect",
+    "delivery": "PortabilityAspect",
     "weight": "WeightAspect",
     "lightweight": "WeightAspect",
     "heavy": "WeightAspect",
@@ -643,19 +794,52 @@
     "dimensions": "DimensionsAspect",
     "thin": "DimensionsAspect",
     "thickness": "DimensionsAspect",
+    "edges": "DimensionsAspect",
     "design": "DesignAspect",
     "look": "DesignAspect",
     "appearance": "DesignAspect",
     "quality": "DesignAspect",
+    "build": "DesignAspect",
     "build quality": "DesignAspect",
+    "hinge": "DesignAspect",
     "price": "PriceAspect",
+    "prices": "PriceAspect",
     "cost": "PriceAspect",
     "value": "PriceAspect",
     "expensive": "PriceAspect",
     "cheap": "PriceAspect",
     "support": "SupportAspect",
+    "tech support": "SupportAspect",
     "warranty": "SupportAspect",
+    "warrenty": "SupportAspect",
+    "extended warranty": "SupportAspect",
     "service": "SupportAspect",
     "customer service": "SupportAspect"
-  }
+  },
+  "rules": [
+    {
+      "name": "criticalChildInfluencesParent",
+      "description": "A critical child concept structurally influences its parent.",
+      "swrl": "hasSubAspect(?parent, ?child) ^ isCritical(?child, true) -> influences(?child, ?parent)",
+      "executable_in_owl": true
+    },
+    {
+      "name": "criticalNegativeHasHighImpact",
+      "description": "A critical concept with a negative model score has high impact.",
+      "swrl": "Operational numeric rule evaluated after sentiment prediction; HermiT does not support the required swrlb:lessThan atom.",
+      "executable_in_owl": false
+    },
+    {
+      "name": "allObservedChildrenNegative",
+      "description": "When every observed child is negative, the parent should not be positive. Closed-world evaluation is required.",
+      "swrl": "Operational closed-world rule; not representable faithfully as a plain OWL 2 DL/SWRL universal quantification.",
+      "executable_in_owl": false
+    },
+    {
+      "name": "contradictoryConceptSeparation",
+      "description": "Concepts linked by contradicts should not receive nearly equal sentiment scores.",
+      "swrl": "Operational numeric rule evaluated by the training constraint layer.",
+      "executable_in_owl": false
+    }
+  ]
 }
